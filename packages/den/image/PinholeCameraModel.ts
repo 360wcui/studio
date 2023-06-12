@@ -130,6 +130,39 @@ export class PinholeCameraModel {
     }
   }
 
+  // Question: Do I need this ut as input if I'm returning ?
+  // I added it just to keep the similarity with other functions.
+  // I don't see the use of it.
+  public undistort (out: Vector2, pixel: Readonly<Vector2>, iterations = 5): Vector2 {
+    const D  = this.D;
+    const [k1, k2, p1, p2, k3, k4, k5, k6] = D;
+
+    let x0 = pixel.x;
+    let y0 = pixel.y;
+    out.x = pixel.x;
+    out.y = pixel.y;
+    const count = k1 !== 0 || k2 !== 0 || p1 !== 0 || p2 !== 0 || k3 !== 0 ? iterations : 1;
+    for(let i = 0; i < count; ++i)
+    {
+      const xx = out.x*out.x;
+      const yy = out.y*out.y;
+      const xy = out.x*out.y;
+      const r2 = xx + yy;
+      const r4 = r2*r2;
+      const r6 = r4*r2;
+
+      //TODO(saching13): THis can be improved by adding a termination criteria and cross validation loop
+      const cdist = 1 + k1 * r2 + k2 * r4 + k3 * r6;
+      const  icdist = (1 + k4 * r2 + k5 * r4 + k6 * r6) / cdist;
+      let deltaX = 2*p1*xy+ p2*(r2 + 2*xx);
+      let deltaY = p1*(r2 + 2*yy) + 2*p2*xy;
+      out.x = (x0 - deltaX)*icdist;
+      out.y = (y0 - deltaY)*icdist;
+    }
+
+    return out;
+  }
+
   /**
    * Projects a 2D image pixel to a point on a plane in 3D world coordinates a
    * unit distance along the Z axis. This is equivalent to `projectPixelTo3dRay`
@@ -149,11 +182,21 @@ export class PinholeCameraModel {
     const cy = P[6];
     const tx = P[3];
     const ty = P[7];
+    let normalizedFramePixel: Vector2;
+    normalizedFramePixel.x = (pixel.x - cx) / fx;
+    normalizedFramePixel.y = (pixel.y - cy) / fy;
+    let undistortedPixel = this.undistort(out, normalizedFramePixel);
 
-    out.x = (pixel.x - cx - tx) / fx;
-    out.y = (pixel.y - cy - ty) / fy;
+    /*
+      COmmenting out original code here.
+      for discussion and reference later.
+      out.x = (pixel.x - cx - tx) / fx;
+      out.y = (pixel.y - cy - ty) / fy;
+      out.z = 1.0;
+    */
+    out.x = undistortedPixel.x;
+    out.y = undistortedPixel.y;
     out.z = 1.0;
-
     return out;
   }
 
@@ -190,7 +233,7 @@ export class PinholeCameraModel {
    */
   public undistortPixel(out: Vector2, point: Readonly<Vector2>, iterations = 5): Vector2 {
     const { P, D } = this;
-    const [k1, k2, p1, p2, k3] = D;
+    const [k1, k2, p1, p2, k3, k4, k5, k6] = D;
 
     const fx = P[0];
     const fy = P[5];
@@ -219,26 +262,40 @@ export class PinholeCameraModel {
     // such as points close to the focal plane.
     //
     // The implementation is based on code from
-    // <https://yangyushi.github.io/code/2020/03/04/opencv-undistort.html>
+    // initUndistortRectifyMap and undistortPoints from OpenCV.
     // You can read more about the equations used in the pinhole camera model at
     // <https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#details>
-    let x = (point.x - cx) / fx;
-    let y = (point.y - cy) / fy;
 
-    const x0 = x;
-    const y0 = y;
-    const count = k1 !== 0 || k2 !== 0 || p1 !== 0 || p2 !== 0 || k3 !== 0 ? iterations : 1;
-    for (let i = 0; i < count; i++) {
-      const r2 = x * x + y * y; // squared distance in the image projected by the pinhole model
-      const k_inv = 1 / (1 + k1 * r2 + k2 * r2 * r2 + k3 * r2 * r2 * r2);
-      const delta_x = 2 * p1 * x * y + p2 * (r2 + 2 * x * x);
-      const delta_y = p1 * (r2 + 2 * y * y) + 2 * p2 * x * y;
-      x = (x0 - delta_x) * k_inv;
-      y = (y0 - delta_y) * k_inv;
-    }
+    let normalizedFramePixel: Vector2 ={ x: (point.x - cx) / fx, y: (point.y - cy) / fy };
+    let undistortedPixel: Vector2;
 
-    out.x = x * fx + cx;
-    out.y = y * fy + cy;
+    undistortedPixel = this.undistort(undistortedPixel, normalizedFramePixel, iterations);
+
+    out.x = undistortedPixel.x * fx + cx;
+    out.y = undistortedPixel.y * fy + cy;
+    return out;
+  }
+
+  public distort(out: Vector2, normalizedPoint: Readonly<Vector2>, ): Vector2 {
+    const D  = this.D;
+    const [k1, k2, p1, p2, k3, k4, k5, k6] = D;
+
+    // x'' <- x'(1+k1*r^2+k2*r^4+k3*r^6) / (1 + k4_ * r2 + k5_ * r4 + k6_ * r6) + 2p1*x'*y' + p2(r^2+2x'^2)
+    // y'' <- y'(1+k1*r^2+k2*r^4+k3*r^6) / (1 + k4_ * r2 + k5_ * r4 + k6_ * r6) + p1(r^2+2y'^2) + 2p2*x'*y'
+    // where r^2 = x'^2 + y'^2
+
+    const xx = normalizedPoint.x * normalizedPoint.x;
+    const yy = normalizedPoint.y * normalizedPoint.y;
+    const xy = normalizedPoint.x * normalizedPoint.y;
+    const r2 = xx + yy;
+    const r4 = r2 * r2;
+    const r6 = r4 * r2;
+
+    const cdist =  (1 + k1 * r2 + k2 * r4 + k3 * r6)/(1 + k4 * r2 + k5 * r4 + k6 * r6);
+    const deltaX = 2*p1*xy + p2*(r2 + 2*xx);
+    const deltaY = 2*p2*xy + p1*(r2 + 2*yy);
+    out.x = normalizedPoint.x * cdist + deltaX;
+    out.y = normalizedPoint.y * cdist + deltaY;
     return out;
   }
 
@@ -268,37 +325,24 @@ export class PinholeCameraModel {
     // x <- (u - c'x) / f'x
     // y <- (v - c'y) / f'y
     // c'x, f'x, etc. (primed) come from "new camera matrix" P[0:3, 0:3].
+    // Question ? Does this tx needs to be considered since the info from TF already exists?
     const x1 = (point.x - cx - tx) / fx;
     const y1 = (point.y - cy - ty) / fy;
     // [X Y W]^T <- R^-1 * [x y 1]^T
-    const X = R[0] * x1 + R[1] * y1 + R[2];
-    const Y = R[3] * x1 + R[4] * y1 + R[5];
-    const W = R[6] * x1 + R[7] * y1 + R[8];
-    const xp = X / W;
-    const yp = Y / W;
+    // Question? This is not R^-1. R is in Row major order as per CameraInfo.
+    // Please correct me if I'm wrong here. (Changed it to R^-1 below)
+    const X = R[0] * x1 + R[3] * y1 + R[6];
+    const Y = R[1] * x1 + R[4] * y1 + R[7];
+    const W = R[2] * x1 + R[5] * y1 + R[8];
+    let normalizedPoint : Vector2 = { x: X / W, y: Y / W };
 
-    // x'' <- x'(1+k1*r^2+k2*r^4+k3*r^6) + 2p1*x'*y' + p2(r^2+2x'^2)
-    // y'' <- y'(1+k1*r^2+k2*r^4+k3*r^6) + p1(r^2+2y'^2) + 2p2*x'*y'
-    // where r^2 = x'^2 + y'^2
-    const r2 = xp * xp + yp * yp;
-    const r4 = r2 * r2;
-    const r6 = r4 * r2;
-    const a1 = 2 * xp * yp;
-    const k1 = D[0]!;
-    const k2 = D[1]!;
-    const p1 = D[2]!;
-    const p2 = D[3]!;
-    const k3 = D[4]!;
-    let barrel_correction = 1 + k1 * r2 + k2 * r4 + k3 * r6;
-    barrel_correction /= 1.0 + D[5] * r2 + D[6] * r4 + D[7] * r6;
-    const xpp = xp * barrel_correction + p1 * a1 + p2 * (r2 + 2 * (xp * xp));
-    const ypp = yp * barrel_correction + p1 * (r2 + 2 * (yp * yp)) + p2 * a1;
+    out = this.distort(out, normalizedPoint);
 
     // map_x(u,v) <- x''fx + cx
     // map_y(u,v) <- y''fy + cy
     // cx, fx, etc. come from original camera matrix K.
-    out.x = xpp * K[0] + K[2];
-    out.y = ypp * K[4] + K[5];
+    out.x = out.x * fx + cx;
+    out.y = out.y * fy + cy;
     return out;
   }
 }

@@ -182,9 +182,8 @@ export class PinholeCameraModel {
     const cy = P[6];
     const tx = P[3];
     const ty = P[7];
-    let normalizedFramePixel: Vector2;
-    normalizedFramePixel.x = (pixel.x - cx) / fx;
-    normalizedFramePixel.y = (pixel.y - cy) / fy;
+    let normalizedFramePixel: Vector2 = {x: (pixel.x - cx - tx) / fx,
+                                         y: (pixel.y - cy - ty) / fy};
     let undistortedPixel = this.undistort(out, normalizedFramePixel);
 
     /*
@@ -267,7 +266,7 @@ export class PinholeCameraModel {
     // <https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#details>
 
     let normalizedFramePixel: Vector2 ={ x: (point.x - cx) / fx, y: (point.y - cy) / fy };
-    let undistortedPixel: Vector2;
+    let undistortedPixel: Vector2 = { x: 0, y: 0};
 
     undistortedPixel = this.undistort(undistortedPixel, normalizedFramePixel, iterations);
 

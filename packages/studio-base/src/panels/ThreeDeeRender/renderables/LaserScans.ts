@@ -434,8 +434,8 @@ export class LaserScanMaterial extends THREE.RawShaderMaterial {
 
   public constructor({ picking = false }: { picking?: boolean } = {}) {
     super({
-      vertexShader: /*glsl*/ `\
-        #version 300 es
+      glslVersion: THREE.GLSL3,
+      vertexShader: /*glsl*/ `
         precision highp float;
         precision highp int;
         uniform mat4 projectionMatrix, modelViewMatrix;
@@ -466,8 +466,7 @@ export class LaserScanMaterial extends THREE.RawShaderMaterial {
 
         }
       `,
-      fragmentShader: `\
-        #version 300 es
+      fragmentShader: `
         #ifdef GL_FRAGMENT_PRECISION_HIGH
           precision highp float;
         #else
@@ -527,8 +526,8 @@ class LaserScanInstancePickingMaterial extends THREE.RawShaderMaterial {
   public constructor() {
     const minPointSize = LaserScanInstancePickingMaterial.#MIN_PICKING_POINT_SIZE.toFixed(1);
     super({
-      vertexShader: /* glsl */ `\
-        #version 300 es
+      glslVersion: THREE.GLSL3,
+      vertexShader: /* glsl */ `
         precision highp float;
         precision highp int;
         uniform mat4 projectionMatrix, modelViewMatrix;
@@ -555,8 +554,7 @@ class LaserScanInstancePickingMaterial extends THREE.RawShaderMaterial {
           gl_PointSize = pixelRatio * max(pointSize, ${minPointSize});
         }
       `,
-      fragmentShader: /* glsl */ `\
-        #version 300 es
+      fragmentShader: /* glsl */ `
         #ifdef GL_FRAGMENT_PRECISION_HIGH
           precision highp float;
         #else

@@ -393,7 +393,7 @@ function createCanvasTexture(bitmap: ImageBitmap): THREE.CanvasTexture {
     THREE.UnsignedByteType,
   );
   texture.generateMipmaps = false;
-  texture.encoding = THREE.sRGBEncoding;
+  texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
 }
 
@@ -412,7 +412,7 @@ function createDataTexture(width: number, height: number): THREE.DataTexture {
     THREE.NearestFilter,
     THREE.LinearFilter,
     1,
-    THREE.sRGBEncoding,
+    THREE.SRGBColorSpace,
   );
 }
 

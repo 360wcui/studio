@@ -240,7 +240,6 @@ export class Renderer extends EventEmitter<RendererEvents> implements IRenderer 
     if (!this.gl.capabilities.isWebGL2) {
       throw new Error("WebGL2 is not supported");
     }
-    this.gl.outputEncoding = THREE.sRGBEncoding;
     this.gl.toneMapping = THREE.NoToneMapping;
     this.gl.autoClear = false;
     this.gl.info.autoReset = false;

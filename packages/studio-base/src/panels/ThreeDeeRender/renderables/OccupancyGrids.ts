@@ -320,7 +320,7 @@ function createTexture(occupancyGrid: OccupancyGrid): THREE.DataTexture {
     THREE.NearestFilter,
     THREE.LinearFilter,
     1,
-    THREE.LinearEncoding, // OccupancyGrid carries linear grayscale values, not sRGB
+    THREE.LinearSRGBColorSpace, // OccupancyGrid carries linear grayscale values, not sRGB
   );
   texture.generateMipmaps = false;
   return texture;

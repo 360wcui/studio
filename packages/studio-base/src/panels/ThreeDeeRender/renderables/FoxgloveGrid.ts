@@ -129,17 +129,17 @@ function numericTypeName(type: NumericType): string {
   return NumericType[type as number] ?? `${type}`;
 }
 
-function getTextureEncoding(settings: GridColorModeSettings) {
+function getTextureColorSpace(settings: GridColorModeSettings): THREE.ColorSpace {
   switch (settings.colorMode) {
     case "flat":
       // color is converted to linear by getColorConverter before being written to the texture
-      return THREE.LinearEncoding;
+      return THREE.LinearSRGBColorSpace;
     case "gradient":
     case "colormap":
       // color value is raw numeric value
-      return THREE.LinearEncoding;
+      return THREE.LinearSRGBColorSpace;
     case "rgba-fields":
-      return THREE.sRGBEncoding;
+      return THREE.SRGBColorSpace;
   }
 }
 
@@ -303,9 +303,9 @@ export class FoxgloveGridRenderable extends Renderable<FoxgloveGridUserData> {
       this.userData.material.uniforms.map.value = texture;
     }
 
-    const encoding = getTextureEncoding(settings);
-    if (encoding !== texture.encoding) {
-      texture.encoding = encoding;
+    const colorSpace = getTextureColorSpace(settings);
+    if (colorSpace !== texture.colorSpace) {
+      texture.colorSpace = colorSpace;
       texture.needsUpdate = true;
     }
 
@@ -653,7 +653,7 @@ function createTexture(foxgloveGrid: Grid, settings: GridColorModeSettings): THR
     THREE.NearestFilter,
     THREE.LinearFilter,
     1,
-    getTextureEncoding(settings),
+    getTextureColorSpace(settings),
   );
   texture.generateMipmaps = false;
   return texture;
@@ -802,7 +802,7 @@ function createMaterial(texture: THREE.DataTexture, topic: string): GridShaderMa
       void main() {
         vec4 color = texture2D(map, vUv);
         if(colorMode == COLOR_MODE_RGBA) {
-          // input color is in sRGB, texture.encoding is sRGB, so no conversion is needed
+          // input color is in sRGB, texture.colorSpace is sRGB, so no conversion is needed
           gl_FragColor = color;
         } else if (colorMode == COLOR_MODE_FLAT) {
           // input color was already converted to linear by getColorConverter

@@ -39,7 +39,7 @@ export class DynamicBufferGeometry extends THREE.BufferGeometry {
   }
 
   public createAttribute<T extends TypedArray, C extends TypedArrayConstructor<T>>(
-    name: THREE.BuiltinShaderAttributeName | string,
+    name: string,
     arrayConstructor: C,
     itemSize: number,
     // eslint-disable-next-line @foxglove/no-boolean-parameters

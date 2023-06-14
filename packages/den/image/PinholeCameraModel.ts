@@ -130,9 +130,6 @@ export class PinholeCameraModel {
     }
   }
 
-  // Question: Do I need this ut as input if I'm returning ?
-  // I added it just to keep the similarity with other functions.
-  // I don't see the use of it.
   public undistort(out: Vector2, pixel: Readonly<Vector2>, iterations = 5): Vector2 {
     const D = this.D;
     const [k1, k2, p1, p2, k3, k4, k5, k6] = D;
@@ -269,7 +266,7 @@ export class PinholeCameraModel {
     let normalizedFramePixel: Vector2 = { x: (point.x - cx) / fx, y: (point.y - cy) / fy };
     let undistortedPixel: Vector2 = { x: 0, y: 0 };
 
-    undistortedPixel = this.undistort(undistortedPixel, normalizedFramePixel, iterations);
+    this.undistort(undistortedPixel, normalizedFramePixel, iterations);
 
     out.x = undistortedPixel.x * fx + cx;
     out.y = undistortedPixel.y * fy + cy;
@@ -328,8 +325,6 @@ export class PinholeCameraModel {
     const x1 = (point.x - cx - tx) / fx;
     const y1 = (point.y - cy - ty) / fy;
     // [X Y W]^T <- R^-1 * [x y 1]^T
-    // Question? This is not R^-1. R is in Row major order as per CameraInfo.
-    // Please correct me if I'm wrong here. (Changed it to R^-1 below)
     const X = R[0] * x1 + R[3] * y1 + R[6];
     const Y = R[1] * x1 + R[4] * y1 + R[7];
     const W = R[2] * x1 + R[5] * y1 + R[8];

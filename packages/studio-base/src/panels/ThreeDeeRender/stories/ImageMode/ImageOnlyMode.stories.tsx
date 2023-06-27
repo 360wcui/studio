@@ -267,13 +267,7 @@ const ImageWith3D = (initialConfig: ImageModeConfig): JSX.Element => {
           },
           imageMode: {
             ...initialConfig,
-            annotations: [
-              {
-                topic: "annotations",
-                schemaName: "foxglove.ImageAnnotations",
-                settings: { visible: true },
-              },
-            ],
+            annotations: { annotations: { visible: true } },
           },
           topics: {
             sceneUpdate1: {
@@ -321,28 +315,6 @@ export const ImageOnlyModeOffWithAutoSelectedCalibration: StoryObj<
   play: async () => {
     userEvent.click(await screen.findByText("abc", { selector: ".MuiSelect-select" }));
     userEvent.click(await screen.findByText("camera/img"));
-  },
-};
-
-export const ImageModeForegroundOpacity50Percent: StoryObj<
-  React.ComponentProps<typeof ImageWith3D>
-> = {
-  render: ImageWith3D,
-  args: {
-    imageTopic: "camera/img",
-    calibrationTopic: "camera/calibration",
-    foregroundOpacity: 0.5,
-  },
-};
-
-export const ImageModeForegroundOpacity100Percent: StoryObj<
-  React.ComponentProps<typeof ImageWith3D>
-> = {
-  render: ImageWith3D,
-  args: {
-    imageTopic: "camera/img",
-    calibrationTopic: "camera/calibration",
-    foregroundOpacity: 1.0,
   },
 };
 

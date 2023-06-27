@@ -45,7 +45,7 @@ import {
 } from "../../ros";
 import { topicIsConvertibleToSchema } from "../../topicIsConvertibleToSchema";
 import { ICameraHandler } from "../ICameraHandler";
-import { BitmapCache } from "../Images/BitmapCache";
+import { decodeCompressedImageToBitmap } from "../Images/decodeImage";
 import { getTopicMatchPrefix, sortPrefixMatchesToFront } from "../Images/topicPrefixMatching";
 
 const IMAGE_TOPIC_PATH = ["imageMode", "imageTopic"];
@@ -60,6 +60,8 @@ const IMAGE_TOPIC_DIFFERENT_FRAME = "IMAGE_TOPIC_DIFFERENT_FRAME";
 const CAMERA_MODEL = "CameraModel";
 
 const DEFAULT_FOCAL_LENGTH = 500;
+
+const REMOVE_IMAGE_TIMEOUT_MS = 50;
 
 type ImageModeEvent = { type: "hasModifiedViewChanged" };
 
@@ -80,7 +82,6 @@ const DEFAULT_CONFIG = {
   flipHorizontal: false,
   flipVertical: false,
   rotation: 0 as 0 | 90 | 180 | 270,
-  foregroundOpacity: 0.0,
 };
 
 type ConfigWithDefaults = ImageModeConfig & typeof DEFAULT_CONFIG;
@@ -99,6 +100,9 @@ export class ImageMode
   readonly #annotations: ImageAnnotations;
 
   #imageRenderable: ImageRenderable | undefined;
+  #removeImageTimeout: ReturnType<typeof setTimeout> | undefined;
+  #receivedImageSequenceNumber = 0;
+  #displayedImageSequenceNumber = 0;
 
   readonly #messageHandler: MessageHandler;
 
@@ -111,9 +115,6 @@ export class ImageMode
 
   // eslint-disable-next-line @foxglove/no-boolean-parameters
   #setHasCalibrationTopic: (hasCalibrationTopic: boolean) => void;
-
-  /** Cache of decoded bitmaps to avoid flickering when toggling topics */
-  #bitmapCache = new BitmapCache();
 
   /**
    * @param canvasSize Canvas size in CSS pixels
@@ -268,13 +269,21 @@ export class ImageMode
   }
 
   public override removeAllRenderables(): void {
+    // To avoid flickering while seeking or changing subscriptions, we avoid clearing the
+    // ImageRenderable for a short timeout. When a new image message arrives, we cancel the timeout,
+    // so the old image will continue displaying until the new one has been decoded.
+    if (this.#removeImageTimeout == undefined) {
+      this.#removeImageTimeout = setTimeout(() => {
+        this.#removeImageTimeout = undefined;
+        this.#imageRenderable?.dispose();
+        this.#imageRenderable?.removeFromParent();
+        this.#imageRenderable = undefined;
+        this.#clearCameraModel();
+      }, REMOVE_IMAGE_TIMEOUT_MS);
+    }
     this.#annotations.removeAllRenderables();
-    this.#imageRenderable?.dispose();
-    this.#imageRenderable?.removeFromParent();
-    this.#imageRenderable = undefined;
     this.#messageHandler.clear();
     this.#latestImage = undefined;
-    this.#clearCameraModel();
     super.removeAllRenderables();
   }
 
@@ -332,7 +341,6 @@ export class ImageMode
       rotation,
       minValue,
       maxValue,
-      foregroundOpacity,
     } = this.#getImageModeSettings();
 
     const imageTopics = filterMap(this.renderer.topics ?? [], (topic) => {
@@ -441,16 +449,6 @@ export class ImageMode
       precision: 0,
       value: maxValue,
     };
-    fields.foregroundOpacity = {
-      input: "number",
-      label: "Foreground opacity",
-      placeholder: "0.50",
-      step: 0.05,
-      precision: 3,
-      min: 0,
-      max: 1,
-      value: foregroundOpacity,
-    };
     return [
       {
         path: ["imageMode"],
@@ -510,12 +508,6 @@ export class ImageMode
       if (config.flipVertical !== prevImageModeConfig.flipVertical) {
         this.#camera.setFlipVertical(config.flipVertical);
       }
-      if (config.foregroundOpacity !== prevImageModeConfig.foregroundOpacity) {
-        this.#imageRenderable?.setSettings({
-          ...this.#imageRenderable.userData.settings,
-          foregroundOpacity: config.foregroundOpacity,
-        });
-      }
       if (
         config.minValue !== prevImageModeConfig.minValue ||
         config.maxValue !== prevImageModeConfig.maxValue
@@ -573,6 +565,11 @@ export class ImageMode
     const receiveTime = toNanoSec(messageEvent.receiveTime);
     const frameId = "header" in image ? image.header.frame_id : image.frame_id;
 
+    if (this.#removeImageTimeout != undefined) {
+      clearTimeout(this.#removeImageTimeout);
+      this.#removeImageTimeout = undefined;
+    }
+
     const renderable = this.#getImageRenderable(topic, receiveTime, image, frameId);
 
     this.#latestImage = { topic: messageEvent.topic, image };
@@ -595,27 +592,30 @@ export class ImageMode
       return;
     }
 
-    this.#bitmapCache.getBitmap(
-      messageEvent,
-      image,
-      undefined,
-      (bitmap) => {
+    const seq = ++this.#receivedImageSequenceNumber;
+    decodeCompressedImageToBitmap(image)
+      .then((maybeBitmap) => {
         const prevRenderable = renderable;
         const currentRenderable = this.#imageRenderable;
         // prevent setting and updating disposed renderables
         if (currentRenderable !== prevRenderable) {
           return;
         }
+        // prevent displaying an image older than the one currently displayed
+        if (this.#displayedImageSequenceNumber > seq) {
+          return;
+        }
+        this.#displayedImageSequenceNumber = seq;
         this.renderer.settings.errors.remove(IMAGE_TOPIC_PATH, CREATE_BITMAP_ERR_KEY);
-        renderable.setBitmap(bitmap);
+        renderable.setBitmap(maybeBitmap);
         if (this.#fallbackCameraModelActive()) {
-          this.#updateFallbackCameraModel(bitmap, getFrameIdFromImage(image));
+          this.#updateFallbackCameraModel(maybeBitmap, getFrameIdFromImage(image));
         }
 
         renderable.update();
         this.renderer.queueAnimationFrame();
-      },
-      (err) => {
+      })
+      .catch((err) => {
         const prevRenderable = renderable;
         const currentRenderable = this.#imageRenderable;
         if (currentRenderable !== prevRenderable) {
@@ -626,8 +626,7 @@ export class ImageMode
           CREATE_BITMAP_ERR_KEY,
           `Error creating bitmap: ${err.message}`,
         );
-      },
-    );
+      });
   };
 
   #updateFallbackCameraModel = (
@@ -670,7 +669,6 @@ export class ImageMode
       ...IMAGE_RENDERABLE_DEFAULT_SETTINGS,
       minValue: config.minValue,
       maxValue: config.maxValue,
-      foregroundOpacity: config.foregroundOpacity,
       // planarProjectionFactor must be 1 to avoid imprecise projection due to small number of grid subdivisions
       planarProjectionFactor: 1,
     };
@@ -693,7 +691,7 @@ export class ImageMode
 
     this.add(renderable);
     this.#imageRenderable = renderable;
-    renderable.setRenderFrontAndBehind();
+    renderable.setRenderBehindScene();
     renderable.visible = true;
     return renderable;
   }
@@ -738,7 +736,6 @@ export class ImageMode
       rotation: config.rotation ?? DEFAULT_CONFIG.rotation,
       flipHorizontal: config.flipHorizontal ?? DEFAULT_CONFIG.flipHorizontal,
       flipVertical: config.flipVertical ?? DEFAULT_CONFIG.flipVertical,
-      foregroundOpacity: config.foregroundOpacity ?? DEFAULT_CONFIG.foregroundOpacity,
     };
   }
 

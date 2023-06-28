@@ -134,8 +134,8 @@ export class PinholeCameraModel {
     const D = this.D;
     const [k1, k2, p1, p2, k3, k4, k5, k6] = D;
 
-    let x0 = pixel.x;
-    let y0 = pixel.y;
+    const x0 = pixel.x;
+    const y0 = pixel.y;
     out.x = pixel.x;
     out.y = pixel.y;
     const count = k1 !== 0 || k2 !== 0 || p1 !== 0 || p2 !== 0 || k3 !== 0 ? iterations : 1;
@@ -147,11 +147,10 @@ export class PinholeCameraModel {
       const r4 = r2 * r2;
       const r6 = r4 * r2;
 
-      //TODO(saching13): THis can be improved by adding a termination criteria and cross validation loop
       const cdist = 1 + k1 * r2 + k2 * r4 + k3 * r6;
       const icdist = (1 + k4 * r2 + k5 * r4 + k6 * r6) / cdist;
-      let deltaX = 2 * p1 * xy + p2 * (r2 + 2 * xx);
-      let deltaY = p1 * (r2 + 2 * yy) + 2 * p2 * xy;
+      const deltaX = 2 * p1 * xy + p2 * (r2 + 2 * xx);
+      const deltaY = p1 * (r2 + 2 * yy) + 2 * p2 * xy;
       out.x = (x0 - deltaX) * icdist;
       out.y = (y0 - deltaY) * icdist;
     }
@@ -178,11 +177,11 @@ export class PinholeCameraModel {
     const cy = P[6];
     const tx = P[3];
     const ty = P[7];
-    let normalizedFramePixel: Vector2 = {
+    const normalizedFramePixel: Vector2 = {
       x: (pixel.x - cx - tx) / fx,
       y: (pixel.y - cy - ty) / fy,
     };
-    let undistortedPixel = this.undistort(out, normalizedFramePixel);
+    const undistortedPixel = this.undistort(out, normalizedFramePixel);
 
     /*
       COmmenting out original code here.
@@ -229,8 +228,7 @@ export class PinholeCameraModel {
    * @returns The rectified pixel, a reference to `out`.
    */
   public undistortPixel(out: Vector2, point: Readonly<Vector2>, iterations = 5): Vector2 {
-    const { P, D } = this;
-    const [k1, k2, p1, p2, k3, k4, k5, k6] = D;
+    const { P } = this;
 
     const fx = P[0];
     const fy = P[5];
@@ -263,8 +261,8 @@ export class PinholeCameraModel {
     // You can read more about the equations used in the pinhole camera model at
     // <https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#details>
 
-    let normalizedFramePixel: Vector2 = { x: (point.x - cx) / fx, y: (point.y - cy) / fy };
-    let undistortedPixel: Vector2 = { x: 0, y: 0 };
+    const normalizedFramePixel: Vector2 = { x: (point.x - cx) / fx, y: (point.y - cy) / fy };
+    const undistortedPixel: Vector2 = { x: 0, y: 0 };
 
     this.undistort(undistortedPixel, normalizedFramePixel, iterations);
 
@@ -308,7 +306,7 @@ export class PinholeCameraModel {
     out.x = point.x;
     out.y = point.y;
 
-    const { P, R, D, K } = this;
+    const { P, R } = this;
     const fx = P[0];
     const fy = P[5];
     const cx = P[2];
@@ -328,9 +326,9 @@ export class PinholeCameraModel {
     const X = R[0] * x1 + R[3] * y1 + R[6];
     const Y = R[1] * x1 + R[4] * y1 + R[7];
     const W = R[2] * x1 + R[5] * y1 + R[8];
-    let normalizedPoint: Vector2 = { x: X / W, y: Y / W };
+    const normalizedPoint: Vector2 = { x: X / W, y: Y / W };
 
-    out = this.distort(out, normalizedPoint);
+    this.distort(out, normalizedPoint);
 
     // map_x(u,v) <- x''fx + cx
     // map_y(u,v) <- y''fy + cy

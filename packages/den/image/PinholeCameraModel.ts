@@ -96,7 +96,7 @@ export class PinholeCameraModel {
       throw new Error(`K.length=${K.length}, expected 9`);
     }
     if (P.length !== 12) {
-      throw new Error(`P.length=${K.length}, expected 12`);
+      throw new Error(`P.length=${P.length}, expected 12`);
     }
     if (R.length !== 0 && R.length !== 9) {
       throw new Error(`R.length=${R.length}, expected 9`);

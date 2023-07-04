@@ -27,15 +27,14 @@ export function projectPixel(
   cameraModel: PinholeCameraModel,
   settings: { distance: number; planarProjectionFactor: number },
 ): Vector3 {
-  cameraModel.undistortPixel(tempVec2, uv);
 
   if (settings.planarProjectionFactor === 0) {
-    cameraModel.projectPixelTo3dRay(out, tempVec2);
+    cameraModel.projectPixelTo3dRay(out, uv);
   } else if (settings.planarProjectionFactor === 1) {
-    cameraModel.projectPixelTo3dPlane(out, tempVec2);
+    cameraModel.projectPixelTo3dPlane(out, uv);
   } else {
-    cameraModel.projectPixelTo3dRay(tempVec3a, tempVec2);
-    cameraModel.projectPixelTo3dPlane(tempVec3b, tempVec2);
+    cameraModel.projectPixelTo3dRay(tempVec3a, uv);
+    cameraModel.projectPixelTo3dPlane(tempVec3b, uv);
     lerpVec3(out, tempVec3a, tempVec3b, settings.planarProjectionFactor);
   }
 

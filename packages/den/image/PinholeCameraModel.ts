@@ -170,20 +170,23 @@ export class PinholeCameraModel {
    *   projection matrix `P` is not set.
    */
   public projectPixelTo3dPlane(out: Vector3, pixel: Readonly<Vector2>): Vector3 {
-    const P = this.P;
+    const { K, P} = this;
 
-    const fx = P[0];
-    const fy = P[5];
-    const cx = P[2];
-    const cy = P[6];
-    const tx = P[3];
-    const ty = P[7];
+    const fx = K[0];
+    const fy = K[4];
+    const cx = K[2];
+    const cy = K[5];
+    /* tx and ty represents the position of the optical center of the second camera
+    in the first camera Frame. So if we substract it in the Camera Space and get the
+    normalized projected ray. This ray would be in the first camera frame.
+    We don't want that so we need to ignore thr tx and ty here I think
+    */
     let normalizedFramePixel: Vector2 = {
-      x: (pixel.x - cx - tx) / fx,
-      y: (pixel.y - cy - ty) / fy,
+      x: (pixel.x - cx) / fx,
+      y: (pixel.y - cy) / fy,
     };
-    let undistortedPixel = this.undistort(out, normalizedFramePixel);
 
+    let undistortedPixel = this.undistort(out, normalizedFramePixel);
     /*
       COmmenting out original code here.
       for discussion and reference later.
@@ -229,8 +232,7 @@ export class PinholeCameraModel {
    * @returns The rectified pixel, a reference to `out`.
    */
   public undistortPixel(out: Vector2, point: Readonly<Vector2>, iterations = 5): Vector2 {
-    const { P, D } = this;
-    const [k1, k2, p1, p2, k3, k4, k5, k6] = D;
+    const { K, P} = this;
 
     const fx = P[0];
     const fy = P[5];
@@ -263,7 +265,7 @@ export class PinholeCameraModel {
     // You can read more about the equations used in the pinhole camera model at
     // <https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#details>
 
-    let normalizedFramePixel: Vector2 = { x: (point.x - cx) / fx, y: (point.y - cy) / fy };
+    let normalizedFramePixel: Vector2 = { x: (point.x - K[2]) / K[0], y: (point.y - K[5]) / K[4] };
     let undistortedPixel: Vector2 = { x: 0, y: 0 };
 
     this.undistort(undistortedPixel, normalizedFramePixel, iterations);
@@ -322,8 +324,9 @@ export class PinholeCameraModel {
     // x <- (u - c'x) / f'x
     // y <- (v - c'y) / f'y
     // c'x, f'x, etc. (primed) come from "new camera matrix" P[0:3, 0:3].
-    const x1 = (point.x - cx - tx) / fx;
-    const y1 = (point.y - cy - ty) / fy;
+    // removing tx and ty for same reason as in projectPixelTo3dPlane
+    const x1 = (point.x - cx) / fx;
+    const y1 = (point.y - cy) / fy;
     // [X Y W]^T <- R^-1 * [x y 1]^T
     const X = R[0] * x1 + R[3] * y1 + R[6];
     const Y = R[1] * x1 + R[4] * y1 + R[7];

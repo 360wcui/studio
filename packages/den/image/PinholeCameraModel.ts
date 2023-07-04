@@ -335,8 +335,8 @@ export class PinholeCameraModel {
     // map_x(u,v) <- x''fx + cx
     // map_y(u,v) <- y''fy + cy
     // cx, fx, etc. come from original camera matrix K.
-    out.x = out.x * fx + cx;
-    out.y = out.y * fy + cy;
+    out.x = out.x * K[0] + K[2];
+    out.y = out.y * K[4] + K[5];
     return out;
   }
 }

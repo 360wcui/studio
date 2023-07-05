@@ -490,6 +490,26 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
     }
     this.renderer.settings.errors.remove(renderable.userData.settingsPath, VALID_URL_ERR);
 
+    const { protocol } = new URL(url);
+
+    // Special case: Retrieve URDF from parameter store.
+    if (protocol === "param:") {
+      const paramName = url.slice("param://".length);
+      const urdfParam = this.renderer.parameters?.get(paramName) as string | undefined;
+
+      if (urdfParam) {
+        this.#loadUrdf(instanceId, urdfParam);
+        return;
+      } else {
+        this.renderer.settings.errors.add(
+          renderable.userData.settingsPath,
+          VALID_URL_ERR,
+          `Invalid parameter URL "${url}": The parameter "${paramName}" does not exist`,
+        );
+        return;
+      }
+    }
+
     // Check if this URL has already been fetched
     if (renderable.userData.url === url) {
       return;
@@ -811,7 +831,7 @@ function createMeshMarker(
   };
 }
 
-const VALID_PROTOCOLS = ["https:", "http:", "file:", "data:", "package:"];
+const VALID_PROTOCOLS = ["https:", "http:", "file:", "data:", "package:", "param:"];
 
 function isValidUrl(str: string): boolean {
   try {

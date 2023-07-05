@@ -33,6 +33,8 @@ import {
 
 export type LayoutID = string & { __brand: "LayoutID" };
 
+export type { LayoutData };
+
 export type LayoutState = Readonly<{
   selectedLayout:
     | {

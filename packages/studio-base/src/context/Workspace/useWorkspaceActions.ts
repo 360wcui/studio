@@ -5,15 +5,25 @@
 import { Draft, produce } from "immer";
 import { union } from "lodash";
 import { Dispatch, SetStateAction, useCallback, useMemo } from "react";
+import { useMountedState } from "react-use";
 
 import { useGuaranteedContext } from "@foxglove/hooks";
 import { AppSettingsTab } from "@foxglove/studio-base/components/AppSettingsDialog/AppSettingsDialog";
 import { DataSourceDialogItem } from "@foxglove/studio-base/components/DataSourceDialog";
+import { useAnalytics } from "@foxglove/studio-base/context/AnalyticsContext";
+import {
+  LayoutID,
+  useCurrentLayoutActions,
+} from "@foxglove/studio-base/context/CurrentLayoutContext";
+import { LayoutData } from "@foxglove/studio-base/context/CurrentLayoutContext";
 import { useCurrentUser } from "@foxglove/studio-base/context/CurrentUserContext";
 import {
   IDataSourceFactory,
   usePlayerSelection,
 } from "@foxglove/studio-base/context/PlayerSelectionContext";
+import useCallbackWithToast from "@foxglove/studio-base/hooks/useCallbackWithToast";
+import { AppEvent } from "@foxglove/studio-base/services/IAnalytics";
+import { downloadTextFile } from "@foxglove/studio-base/util/download";
 
 import {
   WorkspaceContext,
@@ -69,6 +79,16 @@ export type WorkspaceActions = {
       setSize: (size: undefined | number) => void;
     };
   };
+
+  layoutActions: {
+    // Open a dialog for the user to select a layout file to import
+    // This will replace the current layout with the imported layout
+    // Fixme - Dialog actions?
+    importFromFile: () => void;
+    // Export the current layout to a file
+    // This will perform a browser download of the current layout to a file
+    exportToFile: () => void;
+  };
 };
 
 export function setterValue<T>(action: SetStateAction<T>, value: T): T {
@@ -90,6 +110,12 @@ export function useWorkspaceActions(): WorkspaceActions {
 
   const { availableSources } = usePlayerSelection();
 
+  const analytics = useAnalytics();
+
+  const isMounted = useMountedState();
+
+  const { getCurrentLayoutState, setCurrentLayoutState } = useCurrentLayoutActions();
+
   const openFile = useOpenFile(availableSources);
 
   const set = useCallback(
@@ -98,6 +124,52 @@ export function useWorkspaceActions(): WorkspaceActions {
     },
     [setState],
   );
+
+  const importLayoutFromFile = useCallbackWithToast(async () => {
+    const fileHandles = await showOpenFilePicker({
+      multiple: false,
+      excludeAcceptAllOption: false,
+      types: [
+        {
+          description: "JSON Files",
+          accept: {
+            "application/json": [".json"],
+          },
+        },
+      ],
+    });
+    if (!isMounted()) {
+      return;
+    }
+
+    const file = await fileHandles[0].getFile();
+    const content = await file.text();
+
+    if (!isMounted()) {
+      return;
+    }
+
+    let parsedState: unknown;
+    try {
+      parsedState = JSON.parse(content);
+    } catch (err) {
+      throw new Error(`${file.name} is not a valid layout: ${err.message}`);
+    }
+
+    if (typeof parsedState !== "object" || !parsedState) {
+      throw new Error(`${file.name} is not a valid layout`);
+    }
+
+    setCurrentLayoutState({
+      selectedLayout: {
+        // fixme - does this ID matter?
+        id: "default" as LayoutID,
+        data: parsedState as LayoutData,
+      },
+    });
+
+    void analytics.logEvent(AppEvent.LAYOUT_IMPORT);
+  }, [analytics, isMounted, setCurrentLayoutState]);
 
   return useMemo(() => {
     return {
@@ -258,6 +330,106 @@ export function useWorkspaceActions(): WorkspaceActions {
             }),
         },
       },
+
+      layoutActions: {
+        importFromFile: importLayoutFromFile,
+        exportToFile: () => {
+          // Use a stable getter to fetch the current layout to avoid thrashing the
+          // dependencies array for our hook.
+          const layoutState = getCurrentLayoutState();
+
+          const selectedLayout = layoutState.selectedLayout;
+          if (!selectedLayout) {
+            return;
+          }
+
+          const content = JSON.stringify(selectedLayout.data ?? "", undefined, 2) ?? "";
+          downloadTextFile(content, `${selectedLayout.name}.json`);
+          void analytics.logEvent(AppEvent.LAYOUT_EXPORT);
+        },
+      },
     };
-  }, [openFile, set, supportsAccountSettings]);
+  }, [
+    analytics,
+    getCurrentLayoutState,
+    importLayoutFromFile,
+    openFile,
+    set,
+    supportsAccountSettings,
+  ]);
 }
+
+/*
+
+const importLayout = useCallbackWithToast(async () => {
+  if (!(await promptForUnsavedChanges())) {
+    return;
+  }
+  const fileHandles = await showOpenFilePicker({
+    multiple: true,
+    excludeAcceptAllOption: false,
+    types: [
+      {
+        description: "JSON Files",
+        accept: {
+          "application/json": [".json"],
+        },
+      },
+    ],
+  });
+  if (fileHandles.length === 0) {
+    return;
+  }
+
+  const newLayouts = await Promise.all(
+    fileHandles.map(async (fileHandle) => {
+      const file = await fileHandle.getFile();
+      const layoutName = path.basename(file.name, path.extname(file.name));
+      const content = await file.text();
+
+      if (!isMounted()) {
+        return;
+      }
+
+      let parsedState: unknown;
+      try {
+        parsedState = JSON.parse(content);
+      } catch (err) {
+        enqueueSnackbar(`${file.name} is not a valid layout: ${err.message}`, {
+          variant: "error",
+        });
+        return;
+      }
+
+      if (typeof parsedState !== "object" || !parsedState) {
+        enqueueSnackbar(`${file.name} is not a valid layout`, { variant: "error" });
+        return;
+      }
+
+      const data = parsedState as LayoutData;
+      const newLayout = await layoutManager.saveNewLayout({
+        name: layoutName,
+        data,
+        permission: "CREATOR_WRITE",
+      });
+      return newLayout;
+    }),
+  );
+
+  if (!isMounted()) {
+    return;
+  }
+  const newLayout = newLayouts.find((layout) => layout != undefined);
+  if (newLayout) {
+    void onSelectLayout(newLayout);
+  }
+  void analytics.logEvent(AppEvent.LAYOUT_IMPORT, { numLayouts: fileHandles.length });
+}, [
+  analytics,
+  enqueueSnackbar,
+  isMounted,
+  layoutManager,
+  onSelectLayout,
+  promptForUnsavedChanges,
+]);
+*/

@@ -9,7 +9,7 @@ import { create } from "zustand";
 import { CompressedImage, RawImage } from "@foxglove/schemas";
 import { MessageEvent } from "@foxglove/studio";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import { PNG_TEST_IMAGE, rad2deg, SENSOR_FRAME_ID } from "./common";
 import { useFixtureQueue } from "./useFixtureQueue";

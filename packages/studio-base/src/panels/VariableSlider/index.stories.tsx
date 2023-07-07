@@ -14,7 +14,7 @@
 import { StoryObj } from "@storybook/react";
 
 import VariableSliderPanel from "@foxglove/studio-base/panels/VariableSlider/index";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 const fixture = {
   topics: [],

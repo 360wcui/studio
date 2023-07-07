@@ -9,7 +9,7 @@ import Logger from "@foxglove/log";
 import type { IDataSourceFactory } from "@foxglove/studio-base";
 import CssBaseline from "@foxglove/studio-base/components/CssBaseline";
 
-import VersionBanner from "./VersionBanner";
+import { VersionBanner } from "./VersionBanner";
 import { canRenderApp } from "./canRenderApp";
 
 const log = Logger.getLogger(__filename);

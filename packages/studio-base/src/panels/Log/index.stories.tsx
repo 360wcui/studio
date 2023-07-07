@@ -16,7 +16,7 @@ import { userEvent, within } from "@storybook/testing-library";
 import { range } from "lodash";
 
 import Log from "@foxglove/studio-base/panels/Log";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 const fixture: Fixture = {
   topics: [{ name: "/rosout", schemaName: "rosgraph_msgs/Log" }],

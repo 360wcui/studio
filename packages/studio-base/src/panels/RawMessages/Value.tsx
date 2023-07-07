@@ -21,7 +21,7 @@ import {
   transitionableRosTypes,
 } from "@foxglove/studio-base/panels/StateTransitions";
 import { OpenSiblingPanel } from "@foxglove/studio-base/types/panels";
-import clipboard from "@foxglove/studio-base/util/clipboard";
+import { copy } from "@foxglove/studio-base/util/clipboard";
 
 import HighlightedValue from "./HighlightedValue";
 import { copyMessageReplacer } from "./copyMessageReplacer";
@@ -105,8 +105,7 @@ function Value(props: ValueProps): JSX.Element {
   );
 
   const handleCopy = useCallback((value: string) => {
-    clipboard
-      .copy(value)
+    copy(value)
       .then(() => {
         setCopied(true);
         timeOutID.current = setTimeout(() => setCopied(false), 1500);

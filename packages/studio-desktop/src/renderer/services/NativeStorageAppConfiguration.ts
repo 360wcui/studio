@@ -8,7 +8,7 @@ import { IAppConfiguration, AppConfigurationValue, ChangeHandler } from "@foxglo
 import { SETTINGS_DATASTORE_NAME, SETTINGS_JSON_DATASTORE_KEY } from "../../common/storage";
 import { Storage } from "../../common/types";
 
-export default class NativeStorageAppConfiguration implements IAppConfiguration {
+export class NativeStorageAppConfiguration implements IAppConfiguration {
   static #STORE_NAME = SETTINGS_DATASTORE_NAME;
   static #STORE_KEY = SETTINGS_JSON_DATASTORE_KEY;
 

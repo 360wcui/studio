@@ -15,9 +15,7 @@ type Fn<A extends unknown[], R> = (...args: A) => R;
  * @param fn function to wrap in a try/catch
  * @returns wrapped fn with the same signature as fn
  */
-export default function useRethrow<Args extends unknown[], Ret>(
-  fn: Fn<Args, Ret>,
-): Fn<Args, Ret | void> {
+export function useRethrow<Args extends unknown[], Ret>(fn: Fn<Args, Ret>): Fn<Args, Ret | void> {
   const [_, setError] = useState(undefined);
   return useCallback(
     (...args: Args): Ret | void => {

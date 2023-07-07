@@ -6,8 +6,8 @@ import { StoryObj } from "@storybook/react";
 
 import { MessageEvent } from "@foxglove/studio";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
-import delay from "@foxglove/studio-base/util/delay";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
+import { delay } from "@foxglove/studio-base/util/delay";
 
 import { QUAT_IDENTITY, rad2deg } from "./common";
 import useDelayedFixture from "./useDelayedFixture";

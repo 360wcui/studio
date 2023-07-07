@@ -6,7 +6,7 @@ import {
   IDataSourceFactory,
   DataSourceFactoryInitializeArgs,
 } from "@foxglove/studio-base/context/PlayerSelectionContext";
-import VelodynePlayer from "@foxglove/studio-base/players/VelodynePlayer";
+import { VelodynePlayer } from "@foxglove/studio-base/players/VelodynePlayer";
 import { Player } from "@foxglove/studio-base/players/types";
 
 class VelodyneDataSourceFactory implements IDataSourceFactory {

@@ -16,7 +16,7 @@ import { reject } from "lodash";
 // toggles an item in an array based on reference equality
 // or an optional predicate to determine if the item should be toggled in/out
 // this function is pure - it always returns a new array
-export default function toggle<T>(
+export function toggle<T>(
   array: T[],
   item: T,
   predicate: (arg0: T) => boolean = (el) => el === item,

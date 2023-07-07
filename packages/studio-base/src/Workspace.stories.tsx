@@ -12,11 +12,11 @@ import PanelCatalogContext, {
   PanelCatalog,
   PanelInfo,
 } from "@foxglove/studio-base/context/PanelCatalogContext";
-import MockCurrentLayoutProvider from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
+import { MockCurrentLayoutProvider } from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
 import EventsProvider from "@foxglove/studio-base/providers/EventsProvider";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
-import Workspace from "./Workspace";
+import { Workspace } from "./Workspace";
 
 export default {
   title: "Workspace",

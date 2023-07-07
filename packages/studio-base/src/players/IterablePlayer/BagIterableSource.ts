@@ -14,8 +14,8 @@ import {
   TopicStats,
 } from "@foxglove/studio-base/players/types";
 import { RosDatatypes } from "@foxglove/studio-base/types/RosDatatypes";
-import BrowserHttpReader from "@foxglove/studio-base/util/BrowserHttpReader";
-import CachedFilelike from "@foxglove/studio-base/util/CachedFilelike";
+import { BrowserHttpReader } from "@foxglove/studio-base/util/BrowserHttpReader";
+import { CachedFilelike } from "@foxglove/studio-base/util/CachedFilelike";
 import { getBagChunksOverlapCount } from "@foxglove/studio-base/util/bags";
 import Bzip2 from "@foxglove/wasm-bz2";
 import decompressLZ4 from "@foxglove/wasm-lz4";

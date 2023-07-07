@@ -143,13 +143,13 @@ export const generateTypeDefs = (datatypes: RosDatatypes): InterfaceDeclarations
 };
 
 // Creates the entire ros.d.ts declaration file.
-const generateRosLib = ({
+export function generateRosLib({
   topics,
   datatypes,
 }: {
   topics: Topic[];
   datatypes: RosDatatypes;
-}): string => {
+}): string {
   let TopicsToMessageDefinition = ts.factory.createInterfaceDeclaration(
     modifiers,
     "TopicsToMessageDefinition",
@@ -275,6 +275,4 @@ const generateRosLib = ({
   `;
 
   return result;
-};
-
-export default generateRosLib;
+}

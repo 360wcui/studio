@@ -53,12 +53,12 @@ import {
   PublishPayload,
   Topic,
 } from "@foxglove/studio-base/players/types";
-import MockCurrentLayoutProvider from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
-import ExtensionCatalogProvider from "@foxglove/studio-base/providers/ExtensionCatalogProvider";
+import { MockCurrentLayoutProvider } from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
+import { ExtensionCatalogProvider } from "@foxglove/studio-base/providers/ExtensionCatalogProvider";
 import { PanelStateContextProvider } from "@foxglove/studio-base/providers/PanelStateContextProvider";
-import TimelineInteractionStateProvider from "@foxglove/studio-base/providers/TimelineInteractionStateProvider";
-import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
-import ThemeProvider from "@foxglove/studio-base/theme/ThemeProvider";
+import { TimelineInteractionStateProvider } from "@foxglove/studio-base/providers/TimelineInteractionStateProvider";
+import { WorkspaceContextProvider } from "@foxglove/studio-base/providers/WorkspaceContextProvider";
+import { ThemeProvider } from "@foxglove/studio-base/theme/ThemeProvider";
 import { RosDatatypes } from "@foxglove/studio-base/types/RosDatatypes";
 import { SavedProps, UserNodes } from "@foxglove/studio-base/types/panels";
 
@@ -353,7 +353,7 @@ type Props = UnconnectedProps & {
   onLayoutAction?: (action: PanelsActions) => void;
 };
 
-export default function PanelSetup(props: Props): JSX.Element {
+export function PanelSetup(props: Props): JSX.Element {
   const theme = useTheme();
   return (
     <WorkspaceContextProvider>

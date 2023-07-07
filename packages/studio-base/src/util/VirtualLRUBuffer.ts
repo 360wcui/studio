@@ -43,7 +43,7 @@ import { isRangeCoveredByRanges, Range } from "./ranges";
 
 const kMaxLength = Math.pow(2, 32);
 
-export default class VirtualLRUBuffer {
+export class VirtualLRUBuffer {
   public readonly byteLength: number; // How many bytes does this buffer represent.
   #blocks: Uint8Array[] = []; // Actual `Buffer` for each block.
   // How many bytes is each block. This used to work up to 2GiB minus a byte, and now seems to crash

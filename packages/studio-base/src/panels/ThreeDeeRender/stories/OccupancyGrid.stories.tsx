@@ -8,7 +8,7 @@ import { screen, userEvent } from "@storybook/testing-library";
 import { MessageEvent } from "@foxglove/studio";
 import { LayerSettingsOccupancyGrid } from "@foxglove/studio-base/panels/ThreeDeeRender/renderables/OccupancyGrids";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import { QUAT_IDENTITY, rad2deg } from "./common";
 import useDelayedFixture from "./useDelayedFixture";

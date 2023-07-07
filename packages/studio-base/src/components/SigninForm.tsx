@@ -7,7 +7,7 @@ import { makeStyles } from "tss-react/mui";
 
 import { useCurrentUser } from "@foxglove/studio-base/context/CurrentUserContext";
 
-import AccountSyncGraphic from "./AccountSyncGraphic";
+import { AccountSyncGraphic } from "./AccountSyncGraphic";
 
 const useStyles = makeStyles()((theme) => ({
   root: {

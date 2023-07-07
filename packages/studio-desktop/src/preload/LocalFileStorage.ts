@@ -13,7 +13,7 @@ import type { Storage, StorageContent } from "../common/types";
 
 const log = Logger.getLogger(__filename);
 
-export default class LocalFileStorage implements Storage {
+export class LocalFileStorage implements Storage {
   #userDataPath = ipcRenderer.invoke("getUserDataPath") as Promise<string>;
 
   public async list(datastore: string): Promise<string[]> {

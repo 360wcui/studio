@@ -4,7 +4,7 @@
 
 import { StoryObj } from "@storybook/react";
 
-import inScreenshotTests from "@foxglove/studio-base/stories/inScreenshotTests";
+import { inScreenshotTests } from "@foxglove/studio-base/stories/inScreenshotTests";
 
 export default {
   title: "inScreenshotTests",

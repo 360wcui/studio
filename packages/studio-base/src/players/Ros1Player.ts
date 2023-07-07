@@ -12,7 +12,7 @@ import { MessageDefinition } from "@foxglove/message-definition";
 import { RosNode, TcpSocket } from "@foxglove/ros1";
 import { Time, fromMillis, isGreaterThan, toSec } from "@foxglove/rostime";
 import { ParameterValue } from "@foxglove/studio";
-import OsContextSingleton from "@foxglove/studio-base/OsContextSingleton";
+import { OsContextSingleton } from "@foxglove/studio-base/OsContextSingleton";
 import PlayerProblemManager from "@foxglove/studio-base/players/PlayerProblemManager";
 import {
   AdvertiseOptions,

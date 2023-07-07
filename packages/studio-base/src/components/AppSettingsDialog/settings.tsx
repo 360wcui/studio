@@ -30,7 +30,7 @@ import { makeStyles } from "tss-react/mui";
 
 import { filterMap } from "@foxglove/den/collection";
 import { AppSetting } from "@foxglove/studio-base/AppSetting";
-import OsContextSingleton from "@foxglove/studio-base/OsContextSingleton";
+import { OsContextSingleton } from "@foxglove/studio-base/OsContextSingleton";
 import Stack from "@foxglove/studio-base/components/Stack";
 import { useAppTimeFormat } from "@foxglove/studio-base/hooks";
 import { useAppConfigurationValue } from "@foxglove/studio-base/hooks/useAppConfigurationValue";

@@ -227,7 +227,7 @@ const useStyles = makeStyles()(({ palette, typography }) => ({
   },
 }));
 
-export default function CssBaseline(props: PropsWithChildren<unknown>): JSX.Element {
+export function CssBaseline(props: PropsWithChildren<unknown>): JSX.Element {
   const { classes } = useStyles();
 
   return <div className={classes.root}>{props.children}</div>;

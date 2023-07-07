@@ -187,7 +187,7 @@ export function createExtensionRegistryStore(
   }));
 }
 
-export default function ExtensionCatalogProvider({
+export function ExtensionCatalogProvider({
   children,
   loaders,
   mockMessageConverters,

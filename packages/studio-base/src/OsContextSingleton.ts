@@ -10,4 +10,4 @@ type GlobalWithCtx = typeof global & {
 
 /** Global singleton of the OsContext provided by the bridge */
 const OsContextSingleton = (global as GlobalWithCtx).ctxbridge;
-export default OsContextSingleton;
+export { OsContextSingleton };

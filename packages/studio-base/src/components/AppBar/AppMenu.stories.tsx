@@ -8,7 +8,7 @@ import { userEvent, within } from "@storybook/testing-library";
 import PlayerSelectionContext, {
   PlayerSelection,
 } from "@foxglove/studio-base/context/PlayerSelectionContext";
-import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
+import { WorkspaceContextProvider } from "@foxglove/studio-base/providers/WorkspaceContextProvider";
 
 import { AppMenu } from "./AppMenu";
 

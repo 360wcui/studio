@@ -7,8 +7,8 @@ import { McapStreamReader, hasMcapPrefix, McapConstants } from "@mcap/core";
 import Logger from "@foxglove/log";
 import { loadDecompressHandlers } from "@foxglove/mcap-support";
 
-import getIndexedMcapInfo from "./getIndexedMcapInfo";
-import getStreamedMcapInfo, { processMcapRecord } from "./getStreamedMcapInfo";
+import { getIndexedMcapInfo } from "./getIndexedMcapInfo";
+import { processMcapRecord, getStreamedMcapInfo } from "./getStreamedMcapInfo";
 import { FileInfo } from "./types";
 
 const log = Logger.getLogger(__filename);

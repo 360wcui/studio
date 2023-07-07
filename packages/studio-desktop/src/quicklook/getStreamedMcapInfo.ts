@@ -100,7 +100,7 @@ interface GenericMcapStreamReader<R> {
   nextRecord(): R | undefined;
 }
 
-export default async function getStreamedMcapInfo<R>(
+export async function getStreamedMcapInfo<R>(
   file: File,
   mcapStreamReader: GenericMcapStreamReader<R>,
   processRecord: (info: McapInfo, record: R) => void,

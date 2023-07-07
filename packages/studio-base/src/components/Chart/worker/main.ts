@@ -13,10 +13,10 @@
 
 // Entrypoint for chartjs worker
 
-import Rpc, { Channel } from "@foxglove/studio-base/util/Rpc";
+import { Channel, Rpc } from "@foxglove/studio-base/util/Rpc";
 import { inWebWorker } from "@foxglove/studio-base/util/workers";
 
-import ChartJsMux from "./ChartJsMux";
+import { ChartJsMux } from "./ChartJsMux";
 
 if (inWebWorker()) {
   // Since we use a single _web_ target for our bundle, _global_ referrs to the window global

@@ -144,7 +144,7 @@ function VersionBannerBase({
   );
 }
 
-export default function VersionBanner({
+export function VersionBanner({
   isChrome,
   currentVersion,
   isDismissable,

@@ -9,7 +9,7 @@ import { useExtensionCatalog } from "@foxglove/studio-base/context/ExtensionCata
 import { ExtensionLoader } from "@foxglove/studio-base/services/ExtensionLoader";
 import { ExtensionInfo } from "@foxglove/studio-base/types/Extensions";
 
-import ExtensionCatalogProvider from "./ExtensionCatalogProvider";
+import { ExtensionCatalogProvider } from "./ExtensionCatalogProvider";
 
 function fakeExtension(overrides: Partial<ExtensionInfo>): ExtensionInfo {
   return {

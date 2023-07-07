@@ -20,8 +20,8 @@ import {
   makeRawImageAndCalibration,
 } from "@foxglove/studio-base/panels/ThreeDeeRender/stories/ImageMode/imageCommon";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
-import delay from "@foxglove/studio-base/util/delay";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
+import { delay } from "@foxglove/studio-base/util/delay";
 
 import { ImagePanel, ThreeDeePanel } from "../../index";
 import { CameraInfo, CompressedImage as RosCompressedImage, Image as RosRawImage } from "../../ros";

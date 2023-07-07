@@ -16,7 +16,7 @@ import {
 } from "@foxglove/studio";
 import EmptyState from "@foxglove/studio-base/components/EmptyState";
 import Stack from "@foxglove/studio-base/components/Stack";
-import ThemeProvider from "@foxglove/studio-base/theme/ThemeProvider";
+import { ThemeProvider } from "@foxglove/studio-base/theme/ThemeProvider";
 
 import DirectionalPad, { DirectionalPadAction } from "./DirectionalPad";
 

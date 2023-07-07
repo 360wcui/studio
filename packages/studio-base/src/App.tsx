@@ -9,13 +9,13 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import GlobalCss from "@foxglove/studio-base/components/GlobalCss";
 import EventsProvider from "@foxglove/studio-base/providers/EventsProvider";
 import { StudioLogsSettingsProvider } from "@foxglove/studio-base/providers/StudioLogsSettingsProvider";
-import TimelineInteractionStateProvider from "@foxglove/studio-base/providers/TimelineInteractionStateProvider";
+import { TimelineInteractionStateProvider } from "@foxglove/studio-base/providers/TimelineInteractionStateProvider";
 
-import Workspace from "./Workspace";
+import { Workspace } from "./Workspace";
 import { CustomWindowControlsProps } from "./components/AppBar/CustomWindowControls";
 import { ColorSchemeThemeProvider } from "./components/ColorSchemeThemeProvider";
-import CssBaseline from "./components/CssBaseline";
-import DocumentTitleAdapter from "./components/DocumentTitleAdapter";
+import { CssBaseline } from "./components/CssBaseline";
+import { DocumentTitleAdapter } from "./components/DocumentTitleAdapter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import MultiProvider from "./components/MultiProvider";
 import PlayerManager from "./components/PlayerManager";
@@ -26,10 +26,10 @@ import NativeAppMenuContext, { INativeAppMenu } from "./context/NativeAppMenuCon
 import NativeWindowContext, { INativeWindow } from "./context/NativeWindowContext";
 import { IDataSourceFactory } from "./context/PlayerSelectionContext";
 import { UserNodeStateProvider } from "./context/UserNodeStateContext";
-import CurrentLayoutProvider from "./providers/CurrentLayoutProvider";
-import ExtensionCatalogProvider from "./providers/ExtensionCatalogProvider";
-import ExtensionMarketplaceProvider from "./providers/ExtensionMarketplaceProvider";
-import PanelCatalogProvider from "./providers/PanelCatalogProvider";
+import { CurrentLayoutProvider } from "./providers/CurrentLayoutProvider";
+import { ExtensionCatalogProvider } from "./providers/ExtensionCatalogProvider";
+import { ExtensionMarketplaceProvider } from "./providers/ExtensionMarketplaceProvider";
+import { PanelCatalogProvider } from "./providers/PanelCatalogProvider";
 import { LaunchPreference } from "./screens/LaunchPreference";
 import { ExtensionLoader } from "./services/ExtensionLoader";
 

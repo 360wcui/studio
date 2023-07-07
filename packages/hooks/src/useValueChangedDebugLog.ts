@@ -30,4 +30,4 @@ const useValueChangedDebugLog =
     ? noOpImpl
     : useValueChangedDebugLogImpl;
 
-export default useValueChangedDebugLog;
+export { useValueChangedDebugLog };

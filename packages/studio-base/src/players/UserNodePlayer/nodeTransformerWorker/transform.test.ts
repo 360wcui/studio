@@ -13,8 +13,8 @@
 
 /* eslint-disable jest/no-conditional-expect */
 
-import exampleDatatypes from "@foxglove/studio-base/players/UserNodePlayer/nodeTransformerWorker/fixtures/example-datatypes";
-import generateRosLib from "@foxglove/studio-base/players/UserNodePlayer/nodeTransformerWorker/generateRosLib";
+import { datatypes as exampleDatatypes } from "@foxglove/studio-base/players/UserNodePlayer/nodeTransformerWorker/fixtures/example-datatypes";
+import { generateRosLib } from "@foxglove/studio-base/players/UserNodePlayer/nodeTransformerWorker/generateRosLib";
 import {
   generateEmptyTypesLib,
   generateTypesLib,

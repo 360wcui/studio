@@ -13,7 +13,7 @@
 
 import isChromatic from "chromatic/isChromatic";
 
-export default function inScreenshotTests(): boolean {
+export function inScreenshotTests(): boolean {
   // Integration tests and screenshot tests are not always in a headless Chrome, so need to check for a custom user
   // agent.
   return navigator.userAgent.includes("PuppeteerTestingChrome") || isChromatic();

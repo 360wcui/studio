@@ -4,7 +4,7 @@
 
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export default function BlockheadIcon(props: SvgIconProps): JSX.Element {
+export function BlockheadIcon(props: SvgIconProps): JSX.Element {
   return (
     <SvgIcon {...props}>
       <g fill="currentColor">

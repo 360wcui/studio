@@ -20,7 +20,7 @@ import ToolbarIconButton from "@foxglove/studio-base/components/PanelToolbar/Too
 import Stack from "@foxglove/studio-base/components/Stack";
 import { FilterTagInput } from "@foxglove/studio-base/panels/Log/FilterTagInput";
 import useLogStyles from "@foxglove/studio-base/panels/Log/useLogStyles";
-import clipboard from "@foxglove/studio-base/util/clipboard";
+import { copy } from "@foxglove/studio-base/util/clipboard";
 
 import LevelToString from "./LevelToString";
 import { LogMessageEvent, LogLevel } from "./types";
@@ -60,7 +60,7 @@ export type FilterBarProps = {
   onFilterChange: (filter: Filter) => void;
 };
 
-export default function FilterBar(props: FilterBarProps): JSX.Element {
+export function FilterBar(props: FilterBarProps): JSX.Element {
   const { classes: logStyles } = useLogStyles();
   const { classes, cx } = useStyles();
 
@@ -125,7 +125,7 @@ export default function FilterBar(props: FilterBarProps): JSX.Element {
       <Stack direction="row" alignItems="center" gap={0.5}>
         <ToolbarIconButton
           onClick={() => {
-            void clipboard.copy(JSON.stringify(props.messages, undefined, 2) ?? "");
+            void copy(JSON.stringify(props.messages, undefined, 2) ?? "");
           }}
           title="Copy log to clipboard"
         >

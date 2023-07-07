@@ -15,6 +15,6 @@
  * Wait for the browser to load custom fonts that have already been added to the document (via CSS
  * or the FontFace API) and generic font families.
  */
-export default async function waitForFonts(): Promise<unknown> {
+export async function waitForFonts(): Promise<unknown> {
   return await Promise.all([...document.fonts].map(async (font) => await font.load()));
 }

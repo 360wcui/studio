@@ -65,7 +65,7 @@ type ZoomableChart = Chart & {
   };
 };
 
-export default class ChartJSManager {
+export class ChartJSManager {
   #chartInstance?: Chart;
   #fakeNodeEvents = new EventEmitter();
   #fakeDocumentEvents = new EventEmitter();

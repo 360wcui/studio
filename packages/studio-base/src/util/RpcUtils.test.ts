@@ -12,12 +12,12 @@
 //   found at http://www.apache.org/licenses/LICENSE-2.0
 //   You may not use this file except in compliance with the License.
 
-import delay from "@foxglove/studio-base/util/delay";
+import { delay } from "@foxglove/studio-base/util/delay";
 import sendNotification, {
   setNotificationHandler,
 } from "@foxglove/studio-base/util/sendNotification";
 
-import Rpc, { createLinkedChannels } from "./Rpc";
+import { createLinkedChannels, Rpc } from "./Rpc";
 import { setupReceiveReportErrorHandler } from "./RpcMainThreadUtils";
 import { setupSendReportNotificationHandler } from "./RpcWorkerUtils";
 

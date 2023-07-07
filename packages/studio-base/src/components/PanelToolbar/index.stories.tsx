@@ -20,9 +20,9 @@ import { Mosaic, MosaicWindow } from "react-mosaic-component";
 
 import MockPanelContextProvider from "@foxglove/studio-base/components/MockPanelContextProvider";
 import ToolbarIconButton from "@foxglove/studio-base/components/PanelToolbar/ToolbarIconButton";
-import MockCurrentLayoutProvider from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
+import { MockCurrentLayoutProvider } from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
 import { PanelStateContextProvider } from "@foxglove/studio-base/providers/PanelStateContextProvider";
-import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
+import { WorkspaceContextProvider } from "@foxglove/studio-base/providers/WorkspaceContextProvider";
 
 import PanelToolbar from "./index";
 

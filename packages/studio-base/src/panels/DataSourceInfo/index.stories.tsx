@@ -8,7 +8,7 @@ import { fromDate } from "@foxglove/rostime";
 import MockMessagePipelineProvider from "@foxglove/studio-base/components/MessagePipeline/MockMessagePipelineProvider";
 import DataSourceInfoPanel from "@foxglove/studio-base/panels/DataSourceInfo";
 import { PlayerPresence, Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 export default {
   title: "panels/DataSourceInfo",

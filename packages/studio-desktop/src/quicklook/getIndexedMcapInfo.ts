@@ -8,7 +8,7 @@ import { fromNanoSec } from "@foxglove/rostime";
 
 import { FileInfo, TopicInfo } from "./types";
 
-export default async function getIndexedMcapInfo(
+export async function getIndexedMcapInfo(
   file: File,
   decompressHandlers: McapTypes.DecompressHandlers,
 ): Promise<FileInfo> {

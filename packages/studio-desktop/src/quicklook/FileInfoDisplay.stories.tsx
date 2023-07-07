@@ -4,8 +4,8 @@
 
 import { StoryObj } from "@storybook/react";
 
-import FileInfoDisplay from "./FileInfoDisplay";
-import StorybookDecorator from "./StorybookDecorator";
+import { FileInfoDisplay } from "./FileInfoDisplay";
+import { StorybookDecorator } from "./StorybookDecorator";
 
 export default {
   title: "quicklook/FileInfoDisplay",

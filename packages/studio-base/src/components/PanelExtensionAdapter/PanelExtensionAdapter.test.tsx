@@ -14,8 +14,8 @@ import { Time } from "@foxglove/rostime";
 import { PanelExtensionContext, RenderState, MessageEvent, Immutable } from "@foxglove/studio";
 import MockPanelContextProvider from "@foxglove/studio-base/components/MockPanelContextProvider";
 import { AdvertiseOptions, PlayerCapabilities } from "@foxglove/studio-base/players/types";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
-import ThemeProvider from "@foxglove/studio-base/theme/ThemeProvider";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
+import { ThemeProvider } from "@foxglove/studio-base/theme/ThemeProvider";
 
 import PanelExtensionAdapter from "./PanelExtensionAdapter";
 

@@ -11,7 +11,7 @@
 //   found at http://www.apache.org/licenses/LICENSE-2.0
 //   You may not use this file except in compliance with the License.
 
-import filterMap from "./filterMap";
+import { filterMap } from "./filterMap";
 
 describe("filterMap", () => {
   it("behaves like map()+filter(Boolean)", () => {

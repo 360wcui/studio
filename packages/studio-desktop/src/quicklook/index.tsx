@@ -10,8 +10,8 @@ import { useAsync } from "react-use";
 
 import Logger from "@foxglove/log";
 
-import FileInfoDisplay from "./FileInfoDisplay";
-import Flash from "./Flash";
+import { FileInfoDisplay } from "./FileInfoDisplay";
+import { Flash } from "./Flash";
 import { GlobalStyle } from "./GlobalStyle";
 import { getBagInfo } from "./getBagInfo";
 import { getMcapInfo } from "./getMcapInfo";

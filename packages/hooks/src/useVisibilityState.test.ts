@@ -5,7 +5,7 @@
 
 import { act, renderHook } from "@testing-library/react-hooks";
 
-import useVisibilityState from "./useVisibilityState";
+import { useVisibilityState } from "./useVisibilityState";
 
 describe("useVisibilityState", () => {
   it("returns document visibility state and tracks changes", () => {

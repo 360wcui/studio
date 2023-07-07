@@ -11,6 +11,6 @@
 //   found at http://www.apache.org/licenses/LICENSE-2.0
 //   You may not use this file except in compliance with the License.
 
-export default function MockSvg(): JSX.Element {
+export function MockSvg(): JSX.Element {
   return <svg />;
 }

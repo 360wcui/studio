@@ -72,7 +72,7 @@ function createWorkspaceContextStore(
   );
 }
 
-export default function WorkspaceContextProvider({
+export function WorkspaceContextProvider({
   children,
   initialState,
 }: {

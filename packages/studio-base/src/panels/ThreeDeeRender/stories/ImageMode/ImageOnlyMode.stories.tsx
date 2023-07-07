@@ -12,7 +12,7 @@ import { ImageModeConfig } from "@foxglove/studio-base/panels/ThreeDeeRender/IRe
 import { makeRawImageAndCalibration } from "@foxglove/studio-base/panels/ThreeDeeRender/stories/ImageMode/imageCommon";
 import { xyzrpyToPose } from "@foxglove/studio-base/panels/ThreeDeeRender/transforms";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import { ImagePanel, ThreeDeePanel } from "../../index";
 import { TransformStamped } from "../../ros";

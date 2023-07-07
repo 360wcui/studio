@@ -2,7 +2,6 @@
 // License, v2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/
 
-// eslint-disable-next-line filenames/match-exported
 import { RosDatatypes } from "@foxglove/studio-base/types/RosDatatypes";
 
 const datatypes: RosDatatypes = new Map(
@@ -315,4 +314,4 @@ const datatypes: RosDatatypes = new Map(
 );
 
 // ts-prune-ignore-next
-export default datatypes;
+export { datatypes };

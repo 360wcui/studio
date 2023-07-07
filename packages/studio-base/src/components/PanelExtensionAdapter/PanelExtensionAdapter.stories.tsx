@@ -16,7 +16,7 @@ import {
 } from "@foxglove/studio";
 import ErrorBoundary from "@foxglove/studio-base/components/ErrorBoundary";
 import MockPanelContextProvider from "@foxglove/studio-base/components/MockPanelContextProvider";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import PanelExtensionAdapter, { VERSION_CONFIG_KEY } from "./PanelExtensionAdapter";
 

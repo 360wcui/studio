@@ -18,7 +18,7 @@ import MockMessagePipelineProvider from "@foxglove/studio-base/components/Messag
 import { useCurrentLayoutActions } from "@foxglove/studio-base/context/CurrentLayoutContext";
 import { GlobalVariables } from "@foxglove/studio-base/hooks/useGlobalVariables";
 import { Topic, MessageEvent } from "@foxglove/studio-base/players/types";
-import MockCurrentLayoutProvider from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
+import { MockCurrentLayoutProvider } from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
 import { RosDatatypes } from "@foxglove/studio-base/types/RosDatatypes";
 
 import {

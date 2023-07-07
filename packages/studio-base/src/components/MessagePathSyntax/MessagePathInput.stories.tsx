@@ -17,7 +17,7 @@ import { screen, userEvent, waitFor, within } from "@storybook/testing-library";
 import { useState } from "react";
 
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 import { basicDatatypes } from "@foxglove/studio-base/util/basicDatatypes";
 
 import MessagePathInput from "./MessagePathInput";

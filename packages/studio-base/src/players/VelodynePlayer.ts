@@ -67,7 +67,7 @@ type VelodynePlayerOpts = {
   metricsCollector: PlayerMetricsCollectorInterface;
 };
 
-export default class VelodynePlayer implements Player {
+export class VelodynePlayer implements Player {
   #id: string = uuidv4(); // Unique ID for this player
   #port: number; // Listening UDP port
   #listener?: (arg0: PlayerState) => Promise<void>; // Listener for _emitState()

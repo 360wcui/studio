@@ -23,7 +23,7 @@ import {
   DataSourceDialog,
   DataSourceDialogItem,
 } from "@foxglove/studio-base/components/DataSourceDialog";
-import DocumentDropListener from "@foxglove/studio-base/components/DocumentDropListener";
+import { DocumentDropListener } from "@foxglove/studio-base/components/DocumentDropListener";
 import { EventsList } from "@foxglove/studio-base/components/EventsList";
 import KeyListener from "@foxglove/studio-base/components/KeyListener";
 import {
@@ -64,7 +64,7 @@ import { useInitialDeepLinkState } from "@foxglove/studio-base/hooks/useInitialD
 import useNativeAppMenuEvent from "@foxglove/studio-base/hooks/useNativeAppMenuEvent";
 import { PlayerPresence } from "@foxglove/studio-base/players/types";
 import { PanelStateContextProvider } from "@foxglove/studio-base/providers/PanelStateContextProvider";
-import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
+import { WorkspaceContextProvider } from "@foxglove/studio-base/providers/WorkspaceContextProvider";
 
 import { useWorkspaceActions } from "./context/Workspace/useWorkspaceActions";
 
@@ -480,7 +480,7 @@ function WorkspaceContent(props: WorkspaceContentProps): JSX.Element {
   );
 }
 
-export default function Workspace(props: WorkspaceProps): JSX.Element {
+export function Workspace(props: WorkspaceProps): JSX.Element {
   const [showOpenDialogOnStartup = true] = useAppConfigurationValue<boolean>(
     AppSetting.SHOW_OPEN_DIALOG_ON_STARTUP,
   );

@@ -8,7 +8,7 @@ import { useCallback } from "react";
 import Stack from "@foxglove/studio-base/components/Stack";
 import Plot, { PlotConfig } from "@foxglove/studio-base/panels/Plot";
 import { fixture, paths } from "@foxglove/studio-base/panels/Plot/index.stories";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 import { useReadySignal } from "@foxglove/studio-base/stories/ReadySignalContext";
 
 export default {

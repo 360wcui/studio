@@ -17,7 +17,7 @@ import { maybeCast } from "@foxglove/studio-base/util/maybeCast";
  * Like `useConfig`, but for a specific panel id. This generally shouldn't be used by panels
  * directly, but is for use in internal code that's running outside of regular context providers.
  */
-export default function useConfigById<Config extends Record<string, unknown>>(
+export function useConfigById<Config extends Record<string, unknown>>(
   panelId: string | undefined,
 ): [Config | undefined, SaveConfig<Config>] {
   const { getCurrentLayoutState, savePanelConfigs } = useCurrentLayoutActions();

@@ -16,7 +16,7 @@ import { extname } from "path";
 import { useCallback, useLayoutEffect, useState } from "react";
 
 import Logger from "@foxglove/log";
-import DropOverlay from "@foxglove/studio-base/components/DropOverlay";
+import { DropOverlay } from "@foxglove/studio-base/components/DropOverlay";
 
 const log = Logger.getLogger(__filename);
 
@@ -28,7 +28,7 @@ type Props = {
   }) => void;
 };
 
-export default function DocumentDropListener(props: Props): JSX.Element {
+export function DocumentDropListener(props: Props): JSX.Element {
   const [hovering, setHovering] = useState(false);
 
   const { onDrop: onDropProp, allowedExtensions } = props;

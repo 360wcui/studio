@@ -20,7 +20,7 @@ import shallowequal from "shallowequal";
  * the result of useChangeDetector is dangerous. Instead, track the previously used values at the
  * point they are being used.
  */
-export default function useChangeDetector(
+export function useChangeDetector(
   deps: unknown[],
   { initiallyTrue }: { initiallyTrue: boolean },
 ): boolean {

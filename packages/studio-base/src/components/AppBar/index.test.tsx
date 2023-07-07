@@ -10,10 +10,10 @@ import MultiProvider from "@foxglove/studio-base/components/MultiProvider";
 import StudioToastProvider from "@foxglove/studio-base/components/StudioToastProvider";
 import AppConfigurationContext from "@foxglove/studio-base/context/AppConfigurationContext";
 import { UserNodeStateProvider } from "@foxglove/studio-base/context/UserNodeStateContext";
-import MockCurrentLayoutProvider from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
-import TimelineInteractionStateProvider from "@foxglove/studio-base/providers/TimelineInteractionStateProvider";
-import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
-import ThemeProvider from "@foxglove/studio-base/theme/ThemeProvider";
+import { MockCurrentLayoutProvider } from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
+import { TimelineInteractionStateProvider } from "@foxglove/studio-base/providers/TimelineInteractionStateProvider";
+import { WorkspaceContextProvider } from "@foxglove/studio-base/providers/WorkspaceContextProvider";
+import { ThemeProvider } from "@foxglove/studio-base/theme/ThemeProvider";
 import { makeMockAppConfiguration } from "@foxglove/studio-base/util/makeMockAppConfiguration";
 
 import { AppBar } from ".";

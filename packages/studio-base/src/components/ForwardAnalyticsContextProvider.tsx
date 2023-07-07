@@ -7,7 +7,7 @@ import { StoreApi, createStore, useStore } from "zustand";
 
 import { useMustNotChange } from "@foxglove/hooks";
 import AnalyticsContext from "@foxglove/studio-base/context/AnalyticsContext";
-import IAnalytics from "@foxglove/studio-base/services/IAnalytics";
+import { IAnalytics } from "@foxglove/studio-base/services/IAnalytics";
 
 export type ForwardedAnalytics = StoreApi<{ value: IAnalytics }>;
 

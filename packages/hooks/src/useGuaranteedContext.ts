@@ -13,7 +13,7 @@
 
 import { useContext, Context } from "react";
 
-export default function useGuaranteedContext<T>(
+export function useGuaranteedContext<T>(
   contextType: Context<T | undefined>,
   debugContextName?: string,
 ): T {

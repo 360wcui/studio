@@ -14,7 +14,7 @@
 import UrlSearchParams from "url-search-params";
 import util from "util";
 
-import setImmediate from "@foxglove/studio-base/util/setImmediate";
+import { setImmediate } from "@foxglove/studio-base/util/setImmediate";
 
 process.env.WASM_LZ4_ENVIRONMENT = "NODE";
 

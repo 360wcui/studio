@@ -13,7 +13,7 @@ import { MessageEvent } from "@foxglove/studio";
 import { ColorRGBA } from "@foxglove/studio-base/panels/ThreeDeeRender/ros";
 import { xyzrpyToPose } from "@foxglove/studio-base/panels/ThreeDeeRender/transforms";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import { makeColor, QUAT_IDENTITY, rad2deg } from "./common";
 import { ThreeDeePanel } from "../index";

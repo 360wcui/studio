@@ -6,7 +6,7 @@ import { StoryObj } from "@storybook/react";
 import { fireEvent, userEvent, within } from "@storybook/testing-library";
 
 import Table from "@foxglove/studio-base/panels/Table";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 const makeArrayData = ({
   length = 50,

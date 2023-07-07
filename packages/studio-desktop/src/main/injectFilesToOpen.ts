@@ -17,10 +17,7 @@ const log = Logger.getLogger(__filename);
  * Via the debugger we inject a DOM event to set the files of an <input> element.
  */
 const inputElementId = "electron-open-file-input";
-export default async function injectFilesToOpen(
-  debug: Debugger,
-  filesToOpen: string[],
-): Promise<void> {
+export async function injectFilesToOpen(debug: Debugger, filesToOpen: string[]): Promise<void> {
   if (filesToOpen.length === 0) {
     log.debug("injectFilesToOpen: no files - skipping");
     return;

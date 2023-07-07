@@ -19,7 +19,7 @@ import {
   AppSetting,
 } from "@foxglove/studio-base";
 
-import LocalStorageAppConfiguration from "./services/LocalStorageAppConfiguration";
+import { LocalStorageAppConfiguration } from "./services/LocalStorageAppConfiguration";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 

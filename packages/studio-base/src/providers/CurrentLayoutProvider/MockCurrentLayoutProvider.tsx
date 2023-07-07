@@ -23,7 +23,7 @@ import panelsReducer from "./reducers";
  * An alternative implementation of CurrentLayoutProvider, for use in tests, which performs actions
  * synchronously and doesn't require a LayoutManager.
  */
-export default function MockCurrentLayoutProvider({
+export function MockCurrentLayoutProvider({
   children,
   initialState,
   onAction,

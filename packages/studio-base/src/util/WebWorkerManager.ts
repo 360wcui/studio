@@ -14,7 +14,7 @@
 import findIndex from "lodash/findIndex";
 import sortBy from "lodash/sortBy";
 
-import Rpc, { Channel } from "@foxglove/studio-base/util/Rpc";
+import { Channel, Rpc } from "@foxglove/studio-base/util/Rpc";
 import { setupMainThreadRpc } from "@foxglove/studio-base/util/RpcMainThreadUtils";
 
 // This file provides a convenient way to set up and tear down workers as needed. It will create only a single worker
@@ -22,7 +22,7 @@ import { setupMainThreadRpc } from "@foxglove/studio-base/util/RpcMainThreadUtil
 
 type WorkerListenerState<W> = { rpc: Rpc; worker: W; listenerIds: string[] };
 
-export default class WebWorkerManager<W extends Channel> {
+export class WebWorkerManager<W extends Channel> {
   #createWorker: () => W;
   #maxWorkerCount: number;
   #workerStates: (WorkerListenerState<W> | undefined)[];

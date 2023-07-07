@@ -4,7 +4,7 @@
 
 import { StoryObj } from "@storybook/react";
 
-import DropOverlay from "@foxglove/studio-base/components/DropOverlay";
+import { DropOverlay } from "@foxglove/studio-base/components/DropOverlay";
 
 export default {
   title: "components/DropOverlay",

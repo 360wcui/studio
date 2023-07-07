@@ -12,7 +12,7 @@ import {
   LEVELS,
 } from "@foxglove/studio-base/panels/diagnostics/util";
 import { MessageEvent } from "@foxglove/studio-base/players/types";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 export default {
   title: "panels/diagnostics/DiagnosticSummary",

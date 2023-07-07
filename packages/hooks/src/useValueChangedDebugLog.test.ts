@@ -7,7 +7,7 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import Logger from "@foxglove/log";
 
-import { default as useValueChangedDebugLog } from "./useValueChangedDebugLog";
+import { useValueChangedDebugLog } from "./useValueChangedDebugLog";
 
 describe("useValueChangeDebugLog", () => {
   it("should log an error when value changes", () => {

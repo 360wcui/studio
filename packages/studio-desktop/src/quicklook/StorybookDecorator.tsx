@@ -6,7 +6,7 @@ import { Story, StoryContext } from "@storybook/react";
 
 import { GlobalStyle } from "./GlobalStyle";
 
-export default function StorybookDecorator(Child: Story, _ctx: StoryContext): JSX.Element {
+export function StorybookDecorator(Child: Story, _ctx: StoryContext): JSX.Element {
   return (
     <>
       <GlobalStyle />

@@ -37,7 +37,7 @@ import {
   PlayerStateActiveData,
 } from "@foxglove/studio-base/players/types";
 import { RosDatatypes } from "@foxglove/studio-base/types/RosDatatypes";
-import delay from "@foxglove/studio-base/util/delay";
+import { delay } from "@foxglove/studio-base/util/delay";
 
 import { BlockLoader } from "./BlockLoader";
 import { BufferedIterableSource } from "./BufferedIterableSource";

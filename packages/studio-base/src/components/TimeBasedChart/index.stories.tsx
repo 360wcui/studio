@@ -20,7 +20,7 @@ import { useAsync } from "react-use";
 import MockMessagePipelineProvider from "@foxglove/studio-base/components/MessagePipeline/MockMessagePipelineProvider";
 import { triggerWheel } from "@foxglove/studio-base/stories/PanelSetup";
 import { useReadySignal } from "@foxglove/studio-base/stories/ReadySignalContext";
-import delay from "@foxglove/studio-base/util/delay";
+import { delay } from "@foxglove/studio-base/util/delay";
 
 import TimeBasedChart from "./index";
 import type { Props } from "./index";

@@ -13,7 +13,7 @@ import {
   PanelContextMenuItem,
 } from "@foxglove/studio-base/components/PanelContextMenu";
 import PanelToolbar from "@foxglove/studio-base/components/PanelToolbar";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 export default {
   title: "components/PanelContextMenu",

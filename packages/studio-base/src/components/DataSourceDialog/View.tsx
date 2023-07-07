@@ -26,7 +26,7 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export default function View(props: PropsWithChildren<ViewProps>): JSX.Element {
+export function View(props: PropsWithChildren<ViewProps>): JSX.Element {
   const { onOpen } = props;
   const { classes } = useStyles();
   const { dialogActions } = useWorkspaceActions();

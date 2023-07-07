@@ -33,7 +33,7 @@ const storageBridge = (global as unknown as { storageBridge?: Storage }).storage
 const menuBridge = (global as { menuBridge?: NativeMenuBridge }).menuBridge;
 const ctxbridge = (global as { ctxbridge?: OsContext }).ctxbridge;
 
-export default function Root(props: {
+export function Root(props: {
   appConfiguration: IAppConfiguration;
   extraProviders: JSX.Element[] | undefined;
   dataSources: IDataSourceFactory[] | undefined;

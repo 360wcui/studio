@@ -433,7 +433,7 @@ export const compose = (...transformers: NodeDataTransformer[]): NodeDataTransfo
   when errors are not fatal.
 
 */
-const transform = (args: TransformArgs): NodeData => {
+export function transforms(args: TransformArgs): NodeData {
   const { name, sourceCode, topics, rosLib, typesLib, datatypes } = args;
 
   const transformer = compose(
@@ -465,6 +465,4 @@ const transform = (args: TransformArgs): NodeData => {
     topics,
   );
   return { ...result, sourceFile: undefined, typeChecker: undefined };
-};
-
-export default transform;
+}

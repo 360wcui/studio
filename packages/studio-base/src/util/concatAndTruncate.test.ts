@@ -11,7 +11,7 @@
 //   found at http://www.apache.org/licenses/LICENSE-2.0
 //   You may not use this file except in compliance with the License.
 
-import concatAndTruncate from "./concatAndTruncate";
+import { concatAndTruncate } from "./concatAndTruncate";
 
 describe("concatAndTruncate", () => {
   it("can truncate down to zero", () => {

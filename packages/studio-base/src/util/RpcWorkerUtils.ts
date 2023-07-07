@@ -18,7 +18,7 @@ import {
   NotificationSeverity,
 } from "@foxglove/studio-base/util/sendNotification";
 
-import Rpc from "./Rpc";
+import { Rpc } from "./Rpc";
 import overwriteFetch from "./overwriteFetch";
 
 export function setupSendReportNotificationHandler(rpc: Rpc): void {

@@ -5,7 +5,7 @@
 import { StoryObj } from "@storybook/react";
 
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 import { VelodyneScan } from "@foxglove/studio-base/types/Messages";
 
 import { rad2deg } from "./common";

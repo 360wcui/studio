@@ -4,7 +4,7 @@
 
 import { ipcMain, Menu } from "electron";
 
-import StudioWindow from "./StudioWindow";
+import { StudioWindow } from "./StudioWindow";
 
 // Install handlers for ipc menu add and remove events
 // These handlers allow for the preload/renderer to manage the list of "File Open ..." items.

@@ -18,7 +18,7 @@ import { useWorkspaceActions } from "@foxglove/studio-base/context/Workspace/use
 import { AppEvent } from "@foxglove/studio-base/services/IAnalytics";
 
 import { FormField } from "./FormField";
-import View from "./View";
+import { View } from "./View";
 
 const useStyles = makeStyles()((theme) => ({
   grid: {
@@ -83,7 +83,7 @@ const useStyles = makeStyles()((theme) => ({
 
 const selectDataSourceDialog = (store: WorkspaceContextStore) => store.dialogs.dataSource;
 
-export default function Connection(): JSX.Element {
+export function Connection(): JSX.Element {
   const { classes } = useStyles();
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"));

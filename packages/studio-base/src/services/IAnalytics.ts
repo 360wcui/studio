@@ -68,9 +68,8 @@ enum AppEvent {
   EXPERIMENTAL_FEATURE_TOGGLE = "Studio: Experimental Feature Toggled",
 }
 
-interface IAnalytics {
+export interface IAnalytics {
   logEvent(event: AppEvent, data?: { [key: string]: unknown }): void | Promise<void>;
 }
 
 export { AppEvent };
-export default IAnalytics;

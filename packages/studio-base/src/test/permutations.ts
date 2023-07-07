@@ -5,7 +5,7 @@
 /**
  * @returns An iterable producing all N! possible permutations of the items in `values`.
  */
-export default function* permutations<T>(values: T[]): Iterable<T[]> {
+export function* permutations<T>(values: T[]): Iterable<T[]> {
   if (values.length < 2) {
     yield values;
     return;

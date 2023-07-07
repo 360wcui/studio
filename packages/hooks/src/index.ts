@@ -2,15 +2,15 @@
 // License, v2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/
 
-export { default as useChangeDetector } from "./useChangeDetector";
-export { default as useDeepMemo } from "./useDeepMemo";
-export { default as useGuaranteedContext } from "./useGuaranteedContext";
-export { default as useMustNotChange } from "./useMustNotChange";
-export { default as useRethrow } from "./useRethrow";
-export { default as useShallowMemo } from "./useShallowMemo";
-export { default as useValueChangedDebugLog } from "./useValueChangedDebugLog";
-export { default as useVisibilityState } from "./useVisibilityState";
-export { default as useWarnImmediateReRender } from "./useWarnImmediateReRender";
+export { useChangeDetector } from "./useChangeDetector";
+export { useDeepMemo } from "./useDeepMemo";
+export { useGuaranteedContext } from "./useGuaranteedContext";
+export { useMustNotChange } from "./useMustNotChange";
+export { useRethrow } from "./useRethrow";
+export { useShallowMemo } from "./useShallowMemo";
+export { useValueChangedDebugLog } from "./useValueChangedDebugLog";
+export { useVisibilityState } from "./useVisibilityState";
+export { useWarnImmediateReRender } from "./useWarnImmediateReRender";
 export { useMemoryInfo } from "./useMemoryInfo";
 export * from "./selectWithUnstableIdentityWarning";
 export * from "./useCrash";

@@ -5,7 +5,7 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useLayoutEffect, useRef } from "react";
 
-import MockCurrentLayoutProvider from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
+import { MockCurrentLayoutProvider } from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
 
 import { LayoutState, useCurrentLayoutActions, useCurrentLayoutSelector } from "./index";
 

@@ -6,8 +6,8 @@ import { StoryObj } from "@storybook/react";
 import { useEffect, useState } from "react";
 import { useAsync } from "react-use";
 
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
-import delay from "@foxglove/studio-base/util/delay";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
+import { delay } from "@foxglove/studio-base/util/delay";
 
 import TopicGraph, { TopicVisibility } from "./index";
 

@@ -26,7 +26,7 @@ const noOpImpl = () => {};
  */
 const useMustNotChange = process.env.NODE_ENV !== "development" ? noOpImpl : useMustNotChangeImpl;
 
-export default useMustNotChange;
+export { useMustNotChange };
 
 // for tests
 export { useMustNotChangeImpl };

@@ -19,7 +19,7 @@ import {
 import { MessagePathInputStoryFixture } from "@foxglove/studio-base/components/MessagePathSyntax/fixture";
 import SettingsTreeEditor from "@foxglove/studio-base/components/SettingsTreeEditor";
 import Stack from "@foxglove/studio-base/components/Stack";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 export default {
   title: "components/SettingsTreeEditor",

@@ -25,7 +25,7 @@ import {
   nestedTabLayoutFixture2,
 } from "@foxglove/studio-base/panels/Tab/nestedTabLayoutFixture";
 import { TabPanelConfig } from "@foxglove/studio-base/src/types/layouts";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 import { ExpectedResult } from "@foxglove/studio-base/stories/storyHelpers";
 
 import Tab from "./index";

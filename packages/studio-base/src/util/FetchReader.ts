@@ -20,7 +20,7 @@ type EventTypes = {
 
 // An event-emitting wrapper for the Streams API:
 // https://developer.mozilla.org/en-US/docs/Web/API/Streams_API
-export default class FetchReader extends EventEmitter<EventTypes> {
+export class FetchReader extends EventEmitter<EventTypes> {
   #response: Promise<Response>;
   #reader?: ReadableStreamDefaultReader<Uint8Array>;
   #controller: AbortController;

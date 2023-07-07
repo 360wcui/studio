@@ -15,7 +15,7 @@ import { isEqual } from "lodash";
 import { useRef } from "react";
 
 // Continues to return the same instance as long as deep equality is maintained.
-export default function useDeepMemo<T>(value: T): T {
+export function useDeepMemo<T>(value: T): T {
   const ref = useRef(value);
   if (isEqual(value, ref.current)) {
     return ref.current;

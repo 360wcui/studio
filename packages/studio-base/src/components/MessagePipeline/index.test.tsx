@@ -29,7 +29,7 @@ import {
   PlayerPresence,
   TopicStats,
 } from "@foxglove/studio-base/players/types";
-import delay from "@foxglove/studio-base/util/delay";
+import { delay } from "@foxglove/studio-base/util/delay";
 import { makeMockAppConfiguration } from "@foxglove/studio-base/util/makeMockAppConfiguration";
 
 import { MessagePipelineProvider, useMessagePipeline, MessagePipelineContext } from ".";

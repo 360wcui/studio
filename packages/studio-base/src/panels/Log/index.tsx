@@ -24,7 +24,7 @@ import Stack from "@foxglove/studio-base/components/Stack";
 import { usePanelSettingsTreeUpdate } from "@foxglove/studio-base/providers/PanelStateContextProvider";
 import { SaveConfig } from "@foxglove/studio-base/types/panels";
 
-import FilterBar, { FilterBarProps } from "./FilterBar";
+import { FilterBarProps, FilterBar } from "./FilterBar";
 import LogList from "./LogList";
 import { normalizedLogMessage } from "./conversion";
 import filterMessages from "./filterMessages";

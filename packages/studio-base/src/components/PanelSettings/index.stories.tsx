@@ -17,8 +17,8 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { SettingsTreeNodes } from "@foxglove/studio";
 import { PanelCatalog, PanelInfo } from "@foxglove/studio-base/context/PanelCatalogContext";
-import MockCurrentLayoutProvider from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { MockCurrentLayoutProvider } from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import PanelSettings from ".";
 

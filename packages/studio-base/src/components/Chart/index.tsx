@@ -17,11 +17,12 @@ import { v4 as uuidv4 } from "uuid";
 
 import { type ZoomPluginOptions } from "@foxglove/chartjs-plugin-zoom/types/options";
 import Logger from "@foxglove/log";
-import ChartJsMux, {
+import {
   ChartUpdateMessage,
+  ChartJsMux,
 } from "@foxglove/studio-base/components/Chart/worker/ChartJsMux";
-import Rpc, { createLinkedChannels } from "@foxglove/studio-base/util/Rpc";
-import WebWorkerManager from "@foxglove/studio-base/util/WebWorkerManager";
+import { createLinkedChannels, Rpc } from "@foxglove/studio-base/util/Rpc";
+import { WebWorkerManager } from "@foxglove/studio-base/util/WebWorkerManager";
 import { mightActuallyBePartial } from "@foxglove/studio-base/util/mightActuallyBePartial";
 
 import { ChartData, RpcElement, RpcScales } from "./types";
@@ -93,7 +94,7 @@ type RpcSend = <T>(
 const supportsOffscreenCanvas =
   typeof HTMLCanvasElement.prototype.transferControlToOffscreen === "function";
 
-function Chart(props: Props): JSX.Element {
+export function Chart(props: Props): JSX.Element {
   const [id] = useState(() => uuidv4());
 
   const initialized = useRef(false);
@@ -545,5 +546,3 @@ function Chart(props: Props): JSX.Element {
     />
   );
 }
-
-export default Chart;

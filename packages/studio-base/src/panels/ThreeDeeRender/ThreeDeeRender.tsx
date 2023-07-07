@@ -24,7 +24,7 @@ import {
   Topic,
 } from "@foxglove/studio";
 import { AppSetting } from "@foxglove/studio-base/AppSetting";
-import ThemeProvider from "@foxglove/studio-base/theme/ThemeProvider";
+import { ThemeProvider } from "@foxglove/studio-base/theme/ThemeProvider";
 
 import type {
   FollowMode,

@@ -32,10 +32,10 @@ import {
 import AnnotationPlugin from "chartjs-plugin-annotation";
 
 import PlexMono from "@foxglove/studio-base/styles/assets/PlexMono.woff2";
-import Rpc from "@foxglove/studio-base/util/Rpc";
+import { Rpc } from "@foxglove/studio-base/util/Rpc";
 import { setupWorker } from "@foxglove/studio-base/util/RpcWorkerUtils";
 
-import ChartJSManager, { InitOpts } from "./ChartJSManager";
+import { InitOpts, ChartJSManager } from "./ChartJSManager";
 
 type RpcEvent<EventType> = { id: string; event: EventType };
 
@@ -117,7 +117,7 @@ function fixTicks(args: RpcUpdateEvent): RpcUpdateEvent {
 
 // Since we use a capped number of web-workers, a single web-worker may be running multiple chartjs instances
 // The ChartJsWorkerMux forwards an rpc request for a specific chartjs instance id to the appropriate instance
-export default class ChartJsMux {
+export class ChartJsMux {
   readonly #rpc: Rpc;
   readonly #managers = new Map<string, ChartJSManager>();
 

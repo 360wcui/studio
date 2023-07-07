@@ -10,7 +10,7 @@ import { FrameTransform, LaserScan, PointCloud } from "@foxglove/schemas";
 import { MessageEvent } from "@foxglove/studio";
 import { xyzrpyToPose } from "@foxglove/studio-base/panels/ThreeDeeRender/transforms";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 import { emptyPose } from "@foxglove/studio-base/util/Pose";
 
 import { QUAT_IDENTITY, rad2deg } from "./common";

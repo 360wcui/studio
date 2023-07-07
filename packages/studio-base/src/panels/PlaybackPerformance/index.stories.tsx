@@ -13,7 +13,7 @@
 
 import { StoryObj } from "@storybook/react";
 
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import PlaybackPerformance from "./index";
 

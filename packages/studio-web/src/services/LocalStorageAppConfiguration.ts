@@ -4,7 +4,7 @@
 
 import { IAppConfiguration, ChangeHandler, AppConfigurationValue } from "@foxglove/studio-base";
 
-export default class LocalStorageAppConfiguration implements IAppConfiguration {
+export class LocalStorageAppConfiguration implements IAppConfiguration {
   static #KEY_PREFIX = "studio.app-configuration.";
 
   /** Default values for app configuration items which have never been set by a user */

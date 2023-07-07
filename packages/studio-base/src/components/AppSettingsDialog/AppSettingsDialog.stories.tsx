@@ -10,8 +10,8 @@ import { ExtensionInfo, ExtensionLoader } from "@foxglove/studio-base";
 import ExtensionMarketplaceContext, {
   ExtensionMarketplace,
 } from "@foxglove/studio-base/context/ExtensionMarketplaceContext";
-import ExtensionCatalogProvider from "@foxglove/studio-base/providers/ExtensionCatalogProvider";
-import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
+import { ExtensionCatalogProvider } from "@foxglove/studio-base/providers/ExtensionCatalogProvider";
+import { WorkspaceContextProvider } from "@foxglove/studio-base/providers/WorkspaceContextProvider";
 
 import { AppSettingsDialog } from "./AppSettingsDialog";
 

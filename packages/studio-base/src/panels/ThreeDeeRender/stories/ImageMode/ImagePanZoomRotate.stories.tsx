@@ -9,7 +9,7 @@ import * as THREE from "three";
 import { ImageAnnotations, SceneUpdate } from "@foxglove/schemas";
 import { MessageEvent } from "@foxglove/studio";
 import { makeRawImageAndCalibration } from "@foxglove/studio-base/panels/ThreeDeeRender/stories/ImageMode/imageCommon";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import { ImagePanel, ThreeDeePanel } from "../../index";
 

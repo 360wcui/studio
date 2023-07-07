@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import MockMessagePipelineProvider from "@foxglove/studio-base/components/MessagePipeline/MockMessagePipelineProvider";
 import { PlaybackControlsTooltipContent } from "@foxglove/studio-base/components/PlaybackControls/PlaybackControlsTooltipContent";
 import { useTimelineInteractionState } from "@foxglove/studio-base/context/TimelineInteractionStateContext";
-import TimelineInteractionStateProvider from "@foxglove/studio-base/providers/TimelineInteractionStateProvider";
+import { TimelineInteractionStateProvider } from "@foxglove/studio-base/providers/TimelineInteractionStateProvider";
 
 function Wrapper(Wrapped: StoryFn): JSX.Element {
   const theme = useTheme();

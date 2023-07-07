@@ -13,7 +13,7 @@
 
 import { Channel } from "@foxglove/studio-base/util/Rpc";
 
-import WebWorkerManager from "./WebWorkerManager";
+import { WebWorkerManager } from "./WebWorkerManager";
 
 jest.mock("@foxglove/studio-base/util/Rpc", () => {
   return class FakeRpc {

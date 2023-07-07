@@ -6,7 +6,7 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import * as React from "react";
 
-import useRethrow from "./useRethrow";
+import { useRethrow } from "./useRethrow";
 
 describe("useRethrow", () => {
   it("should catch errors thrown", () => {

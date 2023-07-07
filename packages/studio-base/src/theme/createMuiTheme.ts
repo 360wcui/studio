@@ -6,7 +6,7 @@ import { createTheme, Theme } from "@mui/material/styles";
 
 import { Language } from "@foxglove/studio-base/i18n";
 
-import muiComponents from "./muiComponents";
+import { muiComponents } from "./muiComponents";
 import { muiTypography } from "./muiTypography";
 import * as palette from "./palette";
 

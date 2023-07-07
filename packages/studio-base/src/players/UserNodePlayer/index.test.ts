@@ -24,12 +24,12 @@ import {
 import { RosDatatypes } from "@foxglove/studio-base/types/RosDatatypes";
 import { UserNode } from "@foxglove/studio-base/types/panels";
 import { basicDatatypes } from "@foxglove/studio-base/util/basicDatatypes";
-import delay from "@foxglove/studio-base/util/delay";
+import { delay } from "@foxglove/studio-base/util/delay";
 import { DEFAULT_STUDIO_NODE_PREFIX } from "@foxglove/studio-base/util/globalConstants";
 
-import UserNodePlayer from ".";
+import { UserNodePlayer } from ".";
 import MockUserNodePlayerWorker from "./MockUserNodePlayerWorker";
-import exampleDatatypes from "./nodeTransformerWorker/fixtures/example-datatypes";
+import { datatypes as exampleDatatypes } from "./nodeTransformerWorker/fixtures/example-datatypes";
 import { Sources, DiagnosticSeverity, ErrorCodes } from "./types";
 
 const nodeId = "nodeId";

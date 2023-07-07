@@ -44,7 +44,7 @@ import Stack from "@foxglove/studio-base/components/Stack";
 import useDiagnostics from "@foxglove/studio-base/panels/diagnostics/useDiagnostics";
 import { usePanelSettingsTreeUpdate } from "@foxglove/studio-base/providers/PanelStateContextProvider";
 import { SaveConfig } from "@foxglove/studio-base/types/panels";
-import toggle from "@foxglove/studio-base/util/toggle";
+import { toggle } from "@foxglove/studio-base/util/toggle";
 
 import { buildSummarySettingsTree } from "./settings";
 import {
@@ -340,9 +340,11 @@ const defaultConfig: DiagnosticSummaryConfig = {
   sortByLevel: true,
 };
 
-export default Panel(
+const DiagnosticSummaryPanel = Panel(
   Object.assign(DiagnosticSummary, {
     panelType: "DiagnosticSummary",
     defaultConfig,
   }),
 );
+
+export { DiagnosticSummaryPanel };

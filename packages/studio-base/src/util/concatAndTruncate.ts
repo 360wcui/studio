@@ -11,7 +11,7 @@
 //   found at http://www.apache.org/licenses/LICENSE-2.0
 //   You may not use this file except in compliance with the License.
 
-export default function concatAndTruncate<T>(
+export function concatAndTruncate<T>(
   array1: readonly T[],
   array2: readonly T[],
   limit: number,

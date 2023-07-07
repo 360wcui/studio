@@ -4,7 +4,7 @@
 
 import { StoryFn, StoryObj } from "@storybook/react";
 
-import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
+import { WorkspaceContextProvider } from "@foxglove/studio-base/providers/WorkspaceContextProvider";
 
 import { DataSourceDialog } from "./DataSourceDialog";
 

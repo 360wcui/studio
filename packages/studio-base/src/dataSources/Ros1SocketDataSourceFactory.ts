@@ -5,7 +5,7 @@
 import { isString, isUndefined } from "lodash";
 
 import { RosNode } from "@foxglove/ros1";
-import OsContextSingleton from "@foxglove/studio-base/OsContextSingleton";
+import { OsContextSingleton } from "@foxglove/studio-base/OsContextSingleton";
 import {
   IDataSourceFactory,
   DataSourceFactoryInitializeArgs,
@@ -27,7 +27,7 @@ class Ros1SocketDataSourceFactory implements IDataSourceFactory {
       {
         id: "url",
         label: "ROS_MASTER_URI",
-        defaultValue: OsContextSingleton?.getEnvVar("ROS_MASTER_URI") ?? "http://localhost:11311",
+        defaultValue: OsContextSingleton.getEnvVar("ROS_MASTER_URI") ?? "http://localhost:11311",
         description: "Tells ROS nodes where they can locate the master",
       },
       {

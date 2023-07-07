@@ -16,8 +16,8 @@ import {
   useCurrentLayoutSelector,
 } from "@foxglove/studio-base/context/CurrentLayoutContext";
 import { LayoutData } from "@foxglove/studio-base/context/CurrentLayoutContext/actions";
-import CurrentLayoutProvider, {
-  MAX_SUPPORTED_LAYOUT_VERSION,
+import {
+  MAX_SUPPORTED_LAYOUT_VERSION,, CurrentLayoutProvider
 } from "@foxglove/studio-base/providers/CurrentLayoutProvider";
 
 describe("CurrentLayoutProvider", () => {

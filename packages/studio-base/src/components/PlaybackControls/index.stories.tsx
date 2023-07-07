@@ -27,9 +27,9 @@ import {
   PlayerState,
   PlayerStateActiveData,
 } from "@foxglove/studio-base/players/types";
-import MockCurrentLayoutProvider from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
+import { MockCurrentLayoutProvider } from "@foxglove/studio-base/providers/CurrentLayoutProvider/MockCurrentLayoutProvider";
 import EventsProvider from "@foxglove/studio-base/providers/EventsProvider";
-import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
+import { WorkspaceContextProvider } from "@foxglove/studio-base/providers/WorkspaceContextProvider";
 import { makeMockEvents } from "@foxglove/studio-base/test/mocks/makeMockEvents";
 
 import PlaybackControls from "./index";

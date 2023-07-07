@@ -9,7 +9,7 @@ import tinycolor from "tinycolor2";
 const ROTATION_DEGREES = 270;
 
 /** The regular app icon with a hue shift for development mode. */
-export default function getDevModeIcon(): NativeImage | undefined {
+export function getDevModeIcon(): NativeImage | undefined {
   try {
     // This can fail when opening the app from a packaged DMG.
     const originalIcon = nativeImage.createFromPath(

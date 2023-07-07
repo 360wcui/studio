@@ -6,7 +6,7 @@ import { useMedia } from "react-use";
 
 import { AppSetting } from "@foxglove/studio-base/AppSetting";
 import { useAppConfigurationValue } from "@foxglove/studio-base/hooks";
-import ThemeProvider from "@foxglove/studio-base/theme/ThemeProvider";
+import { ThemeProvider } from "@foxglove/studio-base/theme/ThemeProvider";
 
 export function ColorSchemeThemeProvider({
   children,

@@ -9,7 +9,7 @@ import Logger from "@foxglove/log";
 
 const log = Logger.getLogger(__filename);
 
-export default async function installChromeExtensions(): Promise<void> {
+export async function installChromeExtensions(): Promise<void> {
   log.info("Installing Chrome extensions for development...");
 
   try {

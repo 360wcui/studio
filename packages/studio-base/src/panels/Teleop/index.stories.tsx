@@ -6,7 +6,7 @@ import { action } from "@storybook/addon-actions";
 import { StoryFn, StoryContext, StoryObj } from "@storybook/react";
 
 import { PlayerCapabilities } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import TeleopPanel from "./index";
 

@@ -21,8 +21,8 @@ import { APP_BAR_HEIGHT } from "@foxglove/studio-base/src/components/AppBar/cons
 import { NativeAppMenuEvent } from "@foxglove/studio-base/src/context/NativeAppMenuContext";
 import * as palette from "@foxglove/studio-base/src/theme/palette";
 
-import StudioAppUpdater from "./StudioAppUpdater";
-import getDevModeIcon from "./getDevModeIcon";
+import { StudioAppUpdater } from "./StudioAppUpdater";
+import { getDevModeIcon } from "./getDevModeIcon";
 import { simulateUserClick } from "./simulateUserClick";
 import { getTelemetrySettings } from "./telemetry";
 import { encodeRendererArg } from "../common/rendererArgs";
@@ -350,7 +350,7 @@ function buildMenu(browserWindow: BrowserWindow): Menu {
   return Menu.buildFromTemplate(menuTemplate);
 }
 
-class StudioWindow {
+export class StudioWindow {
   // track windows by the web-contents id
   // The web contents id is most broadly available across IPC events and app handlers
   // BrowserWindow.id is not as available
@@ -558,5 +558,3 @@ class StudioWindow {
     fileMenu.submenu?.append(new MenuItem(closeMenuItem));
   }
 }
-
-export default StudioWindow;

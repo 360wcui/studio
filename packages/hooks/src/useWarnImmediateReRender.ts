@@ -30,4 +30,4 @@ const useWarnImmediateReRender =
         });
       };
 
-export default useWarnImmediateReRender;
+export { useWarnImmediateReRender };

@@ -167,12 +167,23 @@ overrides:
       "@typescript-eslint/no-unnecessary-condition": error
       "@typescript-eslint/unbound-method": [error, { ignoreStatic: true }]
 
+      # We prefer named exports over default exports. Here are some resources on why:
+      # https://gitlab.com/gitlab-org/frontend/rfcs/-/issues/20
+      # https://basarat.gitbook.io/typescript/main-1/defaultisbad
+      "import/no-default-export": error
+
   - rules:
       "@typescript-eslint/no-explicit-any": off
     files:
       - "**/*.stories.tsx"
       - "**/*.test.tsx"
       - "**/*.test.ts"
+
+  # Allow stories to export default as this is required for the storybook component story format
+  - rules:
+      "import/no-default-export": off
+    files:
+      - "**/*.stories.tsx"
 
   - rules:
       react/forbid-component-props: off

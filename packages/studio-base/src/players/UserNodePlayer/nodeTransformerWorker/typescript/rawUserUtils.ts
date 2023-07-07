@@ -10,7 +10,7 @@ import time from "./userUtils/time.ts?raw";
 import types from "./userUtils/types.ts?raw";
 import vectors from "./userUtils/vectors.ts?raw";
 
-export default [
+const rawUserUtils = [
   { fileName: "pointClouds.ts", sourceCode: pointClouds },
   { fileName: "quaternions.ts", sourceCode: quaternions },
   { fileName: "readers.ts", sourceCode: readers },
@@ -19,3 +19,5 @@ export default [
   { fileName: "vectors.ts", sourceCode: vectors },
   { fileName: "markers.ts", sourceCode: markers },
 ];
+
+export { rawUserUtils };

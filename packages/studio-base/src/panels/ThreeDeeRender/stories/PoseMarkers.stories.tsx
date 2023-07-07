@@ -6,7 +6,7 @@ import { StoryObj } from "@storybook/react";
 
 import { MessageEvent } from "@foxglove/studio";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import {
   BASE_LINK_FRAME_ID,

@@ -8,7 +8,7 @@ import { useCallback, useLayoutEffect, useMemo } from "react";
 import { useMountedState } from "react-use";
 import { makeStyles } from "tss-react/mui";
 
-import Snow from "@foxglove/studio-base/components/DataSourceDialog/Snow";
+import { Snow } from "@foxglove/studio-base/components/DataSourceDialog/Snow";
 import Stack from "@foxglove/studio-base/components/Stack";
 import { useAnalytics } from "@foxglove/studio-base/context/AnalyticsContext";
 import { usePlayerSelection } from "@foxglove/studio-base/context/PlayerSelectionContext";
@@ -19,8 +19,8 @@ import {
 import { useWorkspaceActions } from "@foxglove/studio-base/context/Workspace/useWorkspaceActions";
 import { AppEvent } from "@foxglove/studio-base/services/IAnalytics";
 
-import Connection from "./Connection";
-import Start from "./Start";
+import { Connection } from "./Connection";
+import { Start } from "./Start";
 
 const DataSourceDialogItems = ["start", "file", "demo", "remote", "connection"] as const;
 export type DataSourceDialogItem = (typeof DataSourceDialogItems)[number];

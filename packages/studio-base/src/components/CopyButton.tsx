@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { useCallback, useState, PropsWithChildren } from "react";
 
-import clipboard from "@foxglove/studio-base/util/clipboard";
+import { copy } from "@foxglove/studio-base/util/clipboard";
 
 function CopyButtonComponent(
   props: PropsWithChildren<{
@@ -39,8 +39,7 @@ function CopyButtonComponent(
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(() => {
-    clipboard
-      .copy(getText())
+    copy(getText())
       .then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 1500);

@@ -10,7 +10,7 @@ import { PanelExtensionContext } from "@foxglove/studio";
 import { CaptureErrorBoundary } from "@foxglove/studio-base/components/CaptureErrorBoundary";
 import Panel from "@foxglove/studio-base/components/Panel";
 import { PanelExtensionAdapter } from "@foxglove/studio-base/components/PanelExtensionAdapter";
-import ThemeProvider from "@foxglove/studio-base/theme/ThemeProvider";
+import { ThemeProvider } from "@foxglove/studio-base/theme/ThemeProvider";
 import { SaveConfig } from "@foxglove/studio-base/types/panels";
 
 import { Indicator } from "./Indicator";

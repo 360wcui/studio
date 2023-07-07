@@ -32,7 +32,7 @@ type EventTypes = {
   error: (err: Error) => void;
 };
 
-class StudioAppUpdater extends EventEmitter<EventTypes> {
+export class StudioAppUpdater extends EventEmitter<EventTypes> {
   #started: boolean = false;
   // Seconds to wait after app startup to check and download updates.
   // This gives the user time to disable app updates for new installations
@@ -123,5 +123,3 @@ class StudioAppUpdater extends EventEmitter<EventTypes> {
     return (StudioAppUpdater.#instance ??= new StudioAppUpdater());
   }
 }
-
-export default StudioAppUpdater;

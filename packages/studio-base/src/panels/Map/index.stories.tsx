@@ -15,7 +15,7 @@ import {
   NavSatFixStatus,
 } from "@foxglove/studio-base/panels/Map/types";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import MapPanel from "./index";
 

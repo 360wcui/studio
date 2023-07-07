@@ -4,7 +4,7 @@
 
 import { StoryObj } from "@storybook/react";
 
-import VersionBanner from "./VersionBanner";
+import { VersionBanner } from "./VersionBanner";
 
 export default {
   title: "web/VersionBanner",

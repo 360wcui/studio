@@ -14,7 +14,7 @@
 import { StoryObj } from "@storybook/react";
 
 import RawMessages from "@foxglove/studio-base/panels/RawMessages";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import {
   enumAdvancedFixture,

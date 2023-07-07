@@ -13,11 +13,11 @@
 
 import ts from "typescript/lib/typescript";
 
-import stressTestDatatypes from "@foxglove/studio-base/players/UserNodePlayer/nodeTransformerWorker/fixtures/example-datatypes";
-import generateRosLib, {
+import { datatypes as stressTestDatatypes } from "@foxglove/studio-base/players/UserNodePlayer/nodeTransformerWorker/fixtures/example-datatypes";
+import {
   generateTypeDefs,
   typedArrayMap,
-  InterfaceDeclarations,
+  InterfaceDeclarations,, generateRosLib
 } from "@foxglove/studio-base/players/UserNodePlayer/nodeTransformerWorker/generateRosLib";
 import { compile } from "@foxglove/studio-base/players/UserNodePlayer/nodeTransformerWorker/transform";
 import { NodeData } from "@foxglove/studio-base/players/UserNodePlayer/types";

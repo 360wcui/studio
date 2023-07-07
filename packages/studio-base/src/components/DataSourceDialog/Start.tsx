@@ -426,7 +426,7 @@ function SidebarItems(props: {
   );
 }
 
-export default function Start(): JSX.Element {
+export function Start(): JSX.Element {
   const { recentSources, selectRecent } = usePlayerSelection();
   const { classes } = useStyles();
   const analytics = useAnalytics();

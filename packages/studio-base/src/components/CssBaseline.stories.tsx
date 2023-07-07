@@ -4,7 +4,7 @@
 
 import { StoryObj } from "@storybook/react";
 
-import CssBaseline from "./CssBaseline";
+import { CssBaseline } from "./CssBaseline";
 
 export default {
   component: CssBaseline,

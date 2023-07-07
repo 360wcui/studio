@@ -2,7 +2,7 @@
 // License, v2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/
 
-export default function formatByteSize(size: number): string {
+export function formatByteSize(size: number): string {
   const suffixes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"];
   let value = size;
   let suffix = 0;

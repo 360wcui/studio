@@ -54,7 +54,7 @@ import {
 import { reportError } from "@foxglove/studio-base/reportError";
 import { RosDatatypes } from "@foxglove/studio-base/types/RosDatatypes";
 import { UserNode, UserNodes } from "@foxglove/studio-base/types/panels";
-import Rpc from "@foxglove/studio-base/util/Rpc";
+import { Rpc } from "@foxglove/studio-base/util/Rpc";
 import { basicDatatypes } from "@foxglove/studio-base/util/basicDatatypes";
 
 const log = Log.getLogger(__filename);
@@ -102,7 +102,7 @@ type ProtectedState = {
   inputsByOutputTopic: Map<string, readonly string[]>;
 };
 
-export default class UserNodePlayer implements Player {
+export class UserNodePlayer implements Player {
   #player: Player;
 
   // Datatypes and topics are derived from nodeRegistrations, but memoized so they only change when needed

@@ -16,7 +16,7 @@ import { useCallback } from "react";
 
 import Stack from "@foxglove/studio-base/components/Stack";
 import { BlockCache } from "@foxglove/studio-base/players/types";
-import PanelSetup, { Fixture } from "@foxglove/studio-base/stories/PanelSetup";
+import { Fixture, PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 import { useReadySignal } from "@foxglove/studio-base/stories/ReadySignalContext";
 import { expandedLineColors } from "@foxglove/studio-base/util/plotColors";
 

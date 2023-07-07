@@ -19,7 +19,7 @@ import {
   IAppConfiguration,
 } from "@foxglove/studio-base";
 
-import Root from "./Root";
+import { Root } from "./Root";
 
 const log = Logger.getLogger(__filename);
 

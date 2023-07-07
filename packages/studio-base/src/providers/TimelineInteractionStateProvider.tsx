@@ -66,7 +66,7 @@ function createTimelineInteractionStateStore(): StoreApi<TimelineInteractionStat
   });
 }
 
-export default function TimelineInteractionStateProvider({
+export function TimelineInteractionStateProvider({
   children,
 }: {
   children?: ReactNode;

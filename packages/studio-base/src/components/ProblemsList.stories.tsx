@@ -9,7 +9,7 @@ import { fromDate } from "@foxglove/rostime";
 import MockMessagePipelineProvider from "@foxglove/studio-base/components/MessagePipeline/MockMessagePipelineProvider";
 import { ProblemsList } from "@foxglove/studio-base/components/ProblemsList";
 import { PlayerPresence, Topic } from "@foxglove/studio-base/players/types";
-import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
+import { WorkspaceContextProvider } from "@foxglove/studio-base/providers/WorkspaceContextProvider";
 
 export default {
   title: "components/ProblemsList",

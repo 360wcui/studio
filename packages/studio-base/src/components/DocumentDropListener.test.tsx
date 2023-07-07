@@ -16,8 +16,8 @@ import { SnackbarProvider } from "notistack";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import DocumentDropListener from "@foxglove/studio-base/components/DocumentDropListener";
-import ThemeProvider from "@foxglove/studio-base/theme/ThemeProvider";
+import { DocumentDropListener } from "@foxglove/studio-base/components/DocumentDropListener";
+import { ThemeProvider } from "@foxglove/studio-base/theme/ThemeProvider";
 
 describe("<DocumentDropListener>", () => {
   let wrapper: HTMLDivElement;

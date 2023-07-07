@@ -50,7 +50,7 @@ const disableBackgroundColorTransition = {
   transition: "none",
 };
 
-export default function muiComponents(theme: Theme): Theme["components"] & MuiLabComponents {
+export function muiComponents(theme: Theme): Theme["components"] & MuiLabComponents {
   const prefersDarkMode = theme.palette.mode === "dark";
 
   return {

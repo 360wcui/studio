@@ -4,7 +4,7 @@
 
 import { StoryFn, StoryContext, StoryObj } from "@storybook/react";
 
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import GaugePanel from "./index";
 

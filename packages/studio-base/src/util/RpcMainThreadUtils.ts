@@ -17,7 +17,7 @@ import sendNotification, {
   NotificationType,
 } from "@foxglove/studio-base/util/sendNotification";
 
-import Rpc from "./Rpc";
+import { Rpc } from "./Rpc";
 
 // This function should be called inside the parent thread; it sets up receiving a message from the worker thread and
 // calling sendNotification.

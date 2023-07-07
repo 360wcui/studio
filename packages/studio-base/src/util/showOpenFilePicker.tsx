@@ -6,7 +6,7 @@
  * A wrapper around window.showOpenFilePicker that returns an empty array instead of throwing when
  * the user cancels the file picker.
  */
-export default async function showOpenFilePicker(
+export async function showOpenFilePicker(
   options?: OpenFilePickerOptions,
 ): Promise<FileSystemFileHandle[] /* foxglove-depcheck-used: @types/wicg-file-system-access */> {
   try {

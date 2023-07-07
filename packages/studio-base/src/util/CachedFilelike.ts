@@ -15,7 +15,7 @@ import { round } from "lodash";
 import Logger from "@foxglove/log";
 import { Filelike } from "@foxglove/rosbag";
 
-import VirtualLRUBuffer from "./VirtualLRUBuffer";
+import { VirtualLRUBuffer } from "./VirtualLRUBuffer";
 import { getNewConnection } from "./getNewConnection";
 import { Range } from "./ranges";
 
@@ -71,7 +71,7 @@ interface ILogger {
   error(..._args: unknown[]): void;
 }
 
-export default class CachedFilelike implements Filelike {
+export class CachedFilelike implements Filelike {
   #fileReader: FileReader;
   #cacheSizeInBytes: number = Infinity;
   #fileSize?: number;

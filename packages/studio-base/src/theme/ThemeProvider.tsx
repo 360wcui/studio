@@ -21,7 +21,7 @@ const muiCache = createCache({ key: "mui", prepend: true });
 const ThemeContainer = React.forwardRef((props, _ref) => <>{props.children}</>);
 ThemeContainer.displayName = "ThemeContainer";
 
-export default function ThemeProvider({
+export function ThemeProvider({
   children,
   isDark,
 }: React.PropsWithChildren<{ isDark: boolean }>): React.ReactElement | ReactNull {

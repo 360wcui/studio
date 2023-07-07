@@ -8,7 +8,7 @@ import { vec3 } from "gl-matrix";
 import type { PointCloud } from "@foxglove/schemas";
 import { MessageEvent } from "@foxglove/studio";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import { QUAT_IDENTITY, rad2deg, VEC3_ZERO } from "./common";
 import useDelayedFixture from "./useDelayedFixture";

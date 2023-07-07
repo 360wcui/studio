@@ -13,11 +13,11 @@
 
 import { isPlainObject } from "lodash";
 
-import Rpc, { Channel, createLinkedChannels } from "@foxglove/studio-base/util/Rpc";
+import { Channel, createLinkedChannels, Rpc } from "@foxglove/studio-base/util/Rpc";
 
 import { processMessage, registerNode } from "./nodeRuntimeWorker/registry";
-import generateRosLib from "./nodeTransformerWorker/generateRosLib";
-import transform from "./nodeTransformerWorker/transform";
+import { generateRosLib } from "./nodeTransformerWorker/generateRosLib";
+import { transforms as transform } from "./nodeTransformerWorker/transform";
 
 const validateWorkerArgs = (arg: unknown) => {
   expect(arg).not.toBeInstanceOf(Function);

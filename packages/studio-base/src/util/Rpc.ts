@@ -65,7 +65,7 @@ export function createLinkedChannels(): { local: Channel; remote: Channel } {
 // To attach rpc within an a web worker:
 //   const rpc = new Rpc(global);
 // Check out the tests for more examples.
-export default class Rpc {
+export class Rpc {
   public static transferables = "$$TRANSFERABLES";
   #channel: Omit<Channel, "terminate">;
   #messageId: number = 0;

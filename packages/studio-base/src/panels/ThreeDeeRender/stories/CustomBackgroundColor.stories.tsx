@@ -4,7 +4,7 @@
 
 import { StoryObj } from "@storybook/react";
 
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 
 import useDelayedFixture from "./useDelayedFixture";
 import { ThreeDeePanel } from "../index";

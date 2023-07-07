@@ -17,7 +17,7 @@ import TestUtils from "react-dom/test-utils";
 
 import { useReadySignal } from "@foxglove/studio-base/stories/ReadySignalContext";
 
-import ChartComponent, { OnClickArg } from ".";
+import { OnClickArg, Chart as ChartComponent } from ".";
 
 const dataPoint = {
   x: 0.000057603000000000004,

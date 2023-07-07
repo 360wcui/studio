@@ -23,19 +23,17 @@ function fallbackCopy(text: string) {
   body.removeChild(el);
 }
 
-export default {
-  // Copy a string to the clipboard
-  async copy(text: string): Promise<void> {
-    // attempt to use the new async clipboard methods. If those are not available or fail, fallback to the old
-    // `execCommand` method.
-    if (mightActuallyBePartial(navigator.clipboard).writeText != undefined) {
-      try {
-        return await navigator.clipboard.writeText(text);
-      } catch (error) {
-        fallbackCopy(text);
-      }
-    } else {
+// Copy a string to the clipboard
+export async function copy(text: string): Promise<void> {
+  // attempt to use the new async clipboard methods. If those are not available or fail, fallback to the old
+  // `execCommand` method.
+  if (mightActuallyBePartial(navigator.clipboard).writeText != undefined) {
+    try {
+      return await navigator.clipboard.writeText(text);
+    } catch (error) {
       fallbackCopy(text);
     }
-  },
-};
+  } else {
+    fallbackCopy(text);
+  }
+}

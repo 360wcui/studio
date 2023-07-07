@@ -7,7 +7,7 @@ import { DeepWritable } from "ts-essentials";
 
 import { MessageEvent } from "@foxglove/studio";
 import { Topic } from "@foxglove/studio-base/players/types";
-import PanelSetup from "@foxglove/studio-base/stories/PanelSetup";
+import { PanelSetup } from "@foxglove/studio-base/stories/PanelSetup";
 import { SphereListMarker } from "@foxglove/studio-base/types/Messages";
 
 import { makeColor, rad2deg } from "./common";

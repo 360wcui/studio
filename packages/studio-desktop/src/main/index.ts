@@ -8,11 +8,11 @@ import fs from "fs";
 import Logger from "@foxglove/log";
 import { AppSetting } from "@foxglove/studio-base/src/AppSetting";
 
-import StudioAppUpdater from "./StudioAppUpdater";
-import StudioWindow from "./StudioWindow";
-import getDevModeIcon from "./getDevModeIcon";
-import injectFilesToOpen from "./injectFilesToOpen";
-import installChromeExtensions from "./installChromeExtensions";
+import { StudioAppUpdater } from "./StudioAppUpdater";
+import { StudioWindow } from "./StudioWindow";
+import { getDevModeIcon } from "./getDevModeIcon";
+import { injectFilesToOpen } from "./injectFilesToOpen";
+import { installChromeExtensions } from "./installChromeExtensions";
 import { installMenuInterface } from "./menu";
 import {
   registerRosPackageProtocolHandlers,

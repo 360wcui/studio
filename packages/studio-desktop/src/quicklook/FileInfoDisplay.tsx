@@ -10,8 +10,8 @@ import { makeStyles } from "tss-react/mui";
 import Logger from "@foxglove/log";
 import { Time, toDate } from "@foxglove/rostime";
 
-import Flash from "./Flash";
-import formatByteSize from "./formatByteSize";
+import { Flash } from "./Flash";
+import { formatByteSize } from "./formatByteSize";
 import { BODY_PADDING, NARROW_MAX_WIDTH, NARROW_MIN_WIDTH } from "./styleConstants";
 import { FileInfo, TopicInfo } from "./types";
 import bagIcon from "../../resources/icon/BagIcon.png";
@@ -182,7 +182,7 @@ function TopicRow(props: { info: TopicInfo }) {
   );
 }
 
-export default function FileInfoDisplay({
+export function FileInfoDisplay({
   fileStats,
   fileInfo,
   error,

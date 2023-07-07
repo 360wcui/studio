@@ -14,7 +14,7 @@
 
 import { renderHook } from "@testing-library/react-hooks";
 
-import useChangeDetector from "./useChangeDetector";
+import { useChangeDetector } from "./useChangeDetector";
 
 describe("useChangeDetector", () => {
   it("returns true only when value changes", () => {

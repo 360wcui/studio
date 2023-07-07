@@ -19,7 +19,7 @@
  * This is a more efficient version of [...values].map(mapFn).filter(Boolean) that avoids two
  * iterations of the array.
  */
-export default function filterMap<T, U>(
+export function filterMap<T, U>(
   values: Iterable<T>,
   mapFn: (arg0: T, arg1: number) => U | undefined,
 ): U[] {

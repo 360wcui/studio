@@ -14,4 +14,8 @@ WORKDIR /src
 COPY --from=build /src/web/.webpack ./
 
 EXPOSE 8080
-CMD ["caddy", "file-server", "--listen", ":8080"]
+CMD \
+    index_html=$(cat index.html) \
+    && replace_pattern='/*FOXGLOVE_STUDIO_DEFAULT_LAYOUT_PLACEHOLDER*/' \
+    && echo ${index_html/"$replace_pattern"/$FOXGLOVE_STUDIO_DEFAULT_LAYOUT} > index.html \
+    && caddy file-server --listen :8080

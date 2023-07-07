@@ -451,10 +451,21 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
 
   #handleParametersChange = (parameters: ReadonlyMap<string, unknown> | undefined): void => {
     const robotDescription = parameters?.get(PARAM_NAME);
-    if (typeof robotDescription !== "string") {
-      return;
+    if (typeof robotDescription === "string") {
+      this.#loadUrdf(PARAM_KEY, robotDescription);
     }
-    this.#loadUrdf(PARAM_KEY, robotDescription);
+
+    // Update custom layer URDFs that use param:// URLs.
+    for (const [instanceId, renderable] of this.renderables.entries()) {
+      const url = (renderable.userData.settings as Partial<LayerSettingsCustomUrdf>).url ?? "";
+      if (url.startsWith("param://")) {
+        const paramName = url.slice("param://".length);
+        const urdf = parameters?.get(paramName);
+        if (typeof urdf === "string") {
+          this.#loadUrdf(instanceId, urdf);
+        }
+      }
+    }
   };
 
   #handleAddUrdf = (instanceId: string): void => {

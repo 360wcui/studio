@@ -70,6 +70,7 @@ export type LayerSettingsUrdf = BaseSettings & {
 export type LayerSettingsCustomUrdf = CustomLayerSettings & {
   layerId: "foxglove.Urdf";
   url: string;
+  framePrefix: string;
 };
 
 const DEFAULT_SETTINGS: LayerSettingsUrdf = {
@@ -85,6 +86,7 @@ const DEFAULT_CUSTOM_SETTINGS: LayerSettingsCustomUrdf = {
   instanceId: "invalid",
   layerId: LAYER_ID,
   url: "",
+  framePrefix: "",
 };
 
 const tempVec3a = new THREE.Vector3();
@@ -242,6 +244,12 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
 
         const fields: SettingsTreeFields = {
           url: { label: "URL", input: "string", placeholder, help, value: config.url ?? "" },
+          framePrefix: {
+            label: "frame prefix",
+            input: "string",
+            help: "Prefix to apply to all frame names (also often called tfPrefix)",
+            value: config.framePrefix ?? "",
+          },
         };
 
         entries.push({
@@ -581,6 +589,7 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
     const settingsPath = isTopicOrParam ? ["topics", instanceId] : ["layers", instanceId];
     const settings = this.#getCurrentSettings(instanceId);
     const url = (settings as Partial<LayerSettingsCustomUrdf>).url;
+    const framePrefix = (settings as Partial<LayerSettingsCustomUrdf>).framePrefix;
 
     // Create a UrdfRenderable if it does not already exist
     if (!renderable) {
@@ -617,7 +626,7 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
 
     // Parse the URDF
     const loadedRenderable = renderable;
-    parseUrdf(urdf, async (uri) => await this.#getFileFetch(uri))
+    parseUrdf(urdf, async (uri) => await this.#getFileFetch(uri), framePrefix)
       .then((parsed) => {
         this.#loadRobot(loadedRenderable, parsed);
         // the frame from the settings update is called before the robot is loaded
@@ -706,10 +715,31 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
 async function parseUrdf(
   text: string,
   getFileContents: (url: string) => Promise<string>,
+  framePrefix?: string,
 ): Promise<ParsedUrdf> {
+  const applyFramePrefix = (name: string) => `${framePrefix}${name}`;
   try {
     log.debug(`Parsing ${text.length} byte URDF`);
     const robot = await parseRobot(text, getFileContents);
+
+    if (framePrefix) {
+      robot.links = new Map(
+        [...robot.links].map(([name, link]) => [
+          applyFramePrefix(name),
+          { ...link, name: applyFramePrefix(link.name) },
+        ]),
+      );
+      robot.joints = new Map(
+        [...robot.joints].map(([name, joint]) => [
+          name,
+          {
+            ...joint,
+            parent: applyFramePrefix(joint.parent),
+            child: applyFramePrefix(joint.child),
+          },
+        ]),
+      );
+    }
 
     const frames = Array.from(robot.links.values(), (link) => link.name);
     const transforms = Array.from(robot.joints.values(), (joint) => {

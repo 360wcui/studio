@@ -126,7 +126,7 @@ function getDatasetsFromMessagePlotPath({
   dataset: DataSet;
   hasMismatchedData: boolean;
 } {
-  let showLine = path.showLine !== false;
+  const showLine = path.showLine !== false;
   let hasMismatchedData =
     isCustomScale(xAxisVal) &&
     xAxisRanges != undefined &&
@@ -166,10 +166,6 @@ function getDatasetsFromMessagePlotPath({
     }
 
     hasMismatchedData = hasMismatchedData || itemHasMismatchedData;
-    // If we have added more than one point for this message, make it a scatter plot.
-    if (item.queriedData.length > 1 && xAxisVal !== "index") {
-      showLine = false;
-    }
   }
 
   for (const datum of rangeData) {

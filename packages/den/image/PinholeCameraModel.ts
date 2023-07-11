@@ -329,13 +329,10 @@ export class PinholeCameraModel {
     const y1 = (point.y - cy) / fy;
 
     // [X Y W]^T <- R^-1 * [x y 1]^T
-    // R is the rectification matrix, which is the identity matrix if the image is already rectified.
-    // or use a rectifiedImage TF to see the rectifiedImage.
-    // const X = R[0] * x1 + R[3] * y1 + R[6];
-    // const Y = R[1] * x1 + R[4] * y1 + R[7];
-    // const W = R[2] * x1 + R[5] * y1 + R[8];
-    // let normalizedPoint: Vector2 = { x: X / W, y: Y / W };
-    let normalizedPoint: Vector2 = { x: x1, y: y1};
+    const X = R[0] * x1 + R[3] * y1 + R[6];
+    const Y = R[1] * x1 + R[4] * y1 + R[7];
+    const W = R[2] * x1 + R[5] * y1 + R[8];
+    let normalizedPoint: Vector2 = { x: X / W, y: Y / W };
 
     out = this.distort(out, normalizedPoint);
 

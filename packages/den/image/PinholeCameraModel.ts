@@ -170,7 +170,7 @@ export class PinholeCameraModel {
    *   projection matrix `P` is not set.
    */
   public projectPixelTo3dPlane(out: Vector3, pixel: Readonly<Vector2>): Vector3 {
-    const { K, P} = this;
+    const { K, P } = this;
 
     const fx = K[0];
     const fy = K[4];
@@ -232,7 +232,7 @@ export class PinholeCameraModel {
    * @returns The rectified pixel, a reference to `out`.
    */
   public undistortPixel(out: Vector2, point: Readonly<Vector2>, iterations = 5): Vector2 {
-    const { K, P} = this;
+    const { K, P } = this;
 
     const fx = P[0];
     const fy = P[5];

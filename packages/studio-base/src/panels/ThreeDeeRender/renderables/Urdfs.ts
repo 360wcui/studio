@@ -245,7 +245,7 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
         const fields: SettingsTreeFields = {
           url: { label: "URL", input: "string", placeholder, help, value: config.url ?? "" },
           framePrefix: {
-            label: "frame prefix",
+            label: "Frame prefix",
             input: "string",
             help: "Prefix to apply to all frame names (also often called tfPrefix)",
             value: config.framePrefix ?? "",
@@ -580,6 +580,10 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
     }
 
     // Clear any previous parsed data for this instanceId
+    const transforms = this.#transformsByInstanceId.get(instanceId) ?? [];
+    for (const transform of transforms) {
+      this.renderer.removeTransform(transform.child, transform.parent, 0n);
+    }
     this.#transformsByInstanceId.delete(instanceId);
     this.#framesByInstanceId.delete(instanceId);
     this.updateSettingsTree();

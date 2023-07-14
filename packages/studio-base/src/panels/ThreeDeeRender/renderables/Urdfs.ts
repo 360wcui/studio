@@ -423,11 +423,13 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
     } else if (path.length === 3) {
       // ["layers", instanceId, field]
       this.saveSetting(path, action.payload.value);
-      const instanceId = path[1]!;
+      const [_layers, instanceId, field] = path as [string, string, string];
       if (path[1] === PARAM_KEY) {
         this.#loadUrdf(instanceId, this.renderer.parameters?.get(PARAM_NAME) as string | undefined);
-      } else {
+      } else if (field === "framePrefix") {
         this.#debouncedLoadUrdf(instanceId, undefined);
+      } else {
+        this.#loadUrdf(instanceId, undefined);
       }
     }
   };

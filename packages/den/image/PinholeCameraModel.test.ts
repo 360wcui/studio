@@ -115,7 +115,7 @@ describe("PinholeCameraModel", () => {
     expect(point).toEqual({ x: 0, y: 0, z: 1 });
 
     model.projectPixelTo3dPlane(point, { x: 100, y: 100 });
-    expect(point).toMatchObject({
+    expect(point).toEqual({
       x: expect.closeTo(-0.6875),
       y: expect.closeTo(-0.4375),
       z: 1,
@@ -130,7 +130,7 @@ describe("PinholeCameraModel", () => {
     expect(ray).toEqual({ x: 0, y: 0, z: 1 });
 
     model.projectPixelTo3dRay(ray, { x: 100, y: 100 });
-    expect(ray).toMatchObject({
+    expect(ray).toEqual({
       x: expect.closeTo(-0.5329517414226601),
       y: expect.closeTo(-0.33915110817805644),
       z: expect.closeTo(0.7752025329784149),
@@ -138,7 +138,7 @@ describe("PinholeCameraModel", () => {
 
     model = new PinholeCameraModel(makeCameraInfo(640, 480, 60));
     model.projectPixelTo3dRay(ray, { x: 0, y: 0 });
-    expect(ray).toMatchObject({
+    expect(ray).toEqual({
       x: expect.closeTo(-0.4681645887845223),
       y: expect.closeTo(-0.3511234415883917),
       z: expect.closeTo(0.8108848540793832),
@@ -153,7 +153,7 @@ describe("PinholeCameraModel", () => {
     expect(rectified).toEqual({ x: 320, y: 240 });
 
     model.undistortPixel(rectified, { x: 100, y: 100 });
-    expect(rectified).toMatchObject({ x: expect.closeTo(100), y: expect.closeTo(100) });
+    expect(rectified).toEqual({ x: expect.closeTo(100), y: expect.closeTo(100) });
   });
 
   it("undistortPixel - plumb_bob", () => {
@@ -164,7 +164,7 @@ describe("PinholeCameraModel", () => {
     expect(rectified).toEqual({ x: 320, y: 240 });
 
     model.undistortPixel(rectified, { x: 0, y: 0 });
-    expect(rectified).toMatchObject({
+    expect(rectified).toEqual({
       x: expect.closeTo(-72.45696739),
       y: expect.closeTo(-54.4783923),
     });
@@ -178,7 +178,7 @@ describe("PinholeCameraModel", () => {
     expect(rectified).toEqual({ x: 320, y: 240 });
 
     model.undistortPixel(rectified, { x: 0, y: 0 });
-    expect(rectified).toMatchObject({
+    expect(rectified).toEqual({
       x: expect.closeTo(-100.71863176),
       y: expect.closeTo(-75.74403003),
     });

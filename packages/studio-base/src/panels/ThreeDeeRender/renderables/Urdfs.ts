@@ -4,7 +4,7 @@
 
 import { vec3 } from "gl-matrix";
 import i18next from "i18next";
-import { maxBy } from "lodash";
+import { debounce, maxBy } from "lodash";
 import * as THREE from "three";
 
 import { UrdfGeometryMesh, UrdfRobot, UrdfVisual, parseRobot, UrdfJoint } from "@foxglove/den/urdf";
@@ -427,7 +427,7 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
       if (path[1] === PARAM_KEY) {
         this.#loadUrdf(instanceId, this.renderer.parameters?.get(PARAM_NAME) as string | undefined);
       } else {
-        this.#loadUrdf(instanceId, undefined);
+        this.#debouncedLoadUrdf(instanceId, undefined);
       }
     }
   };
@@ -647,6 +647,8 @@ export class Urdfs extends SceneExtension<UrdfRenderable> {
         );
       });
   }
+
+  #debouncedLoadUrdf = debounce(this.#loadUrdf.bind(this), 500);
 
   #loadRobot(renderable: UrdfRenderable, { robot, frames, transforms }: ParsedUrdf): void {
     const renderer = this.renderer;

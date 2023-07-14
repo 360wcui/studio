@@ -356,6 +356,10 @@ export const extractGlobalVariables = (nodeData: NodeData): NodeData => {
   };
 };
 
+/**
+ * Read NodeData input and create output datatypes from the script function return value. Returns
+ * a new NodeData instance with the newly created datatypes.
+ */
 export const extractDatatypes = (nodeData: NodeData): NodeData => {
   // Do not attempt to run if there were any compile time errors.
   if (hasTransformerErrors(nodeData)) {

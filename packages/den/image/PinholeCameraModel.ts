@@ -161,6 +161,8 @@ export class PinholeCameraModel {
     // You can read more about the equations used in the pinhole camera model at
     // <https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#details>
 
+    // See also https://github.com/opencv/opencv/blob/192099352577d18b46840cdaf3cbf365e4c6e663/modules/calib3d/src/undistort.dispatch.cpp
+
     let x = point.x;
     let y = point.y;
     const x0 = x;

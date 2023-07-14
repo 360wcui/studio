@@ -23,6 +23,8 @@ type Vec8 = [number, number, number, number, number, number, number, number];
  * A pinhole camera model that can be used to rectify, unrectify, and project pixel coordinates.
  * Based on `ROSPinholeCameraModel` from the ROS `image_geometry` package. See
  * <http://docs.ros.org/diamondback/api/image_geometry/html/c++/pinhole__camera__model_8cpp_source.html>
+ *
+ * See also <http://wiki.ros.org/image_pipeline/CameraInfo>
  */
 export class PinholeCameraModel {
   /**

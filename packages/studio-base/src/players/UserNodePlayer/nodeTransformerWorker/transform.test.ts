@@ -1251,6 +1251,22 @@ describe("pipeline", () => {
         datatypes: basicDatatypes,
         outputDatatype: "std_msgs/ColorRGBA",
       },
+      {
+        description: "Should detect output datatype from @foxglove/schemas",
+        sourceCode: `
+          import { Color } from "@foxglove/schemas";
+
+          export const inputs = [];
+          export const output = "${DEFAULT_STUDIO_NODE_PREFIX}";
+
+          const publisher = (message: any): Color => {
+            return { r: 1, g: 1, b: 1, a: 1 };
+          };
+
+          export default publisher;`,
+        datatypes: basicDatatypes,
+        outputDatatype: "foxglove.Color",
+      },
       /*
       ERRORS
       */

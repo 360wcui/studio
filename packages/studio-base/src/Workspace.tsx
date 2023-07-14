@@ -10,57 +10,40 @@
 //   found at http://www.apache.org/licenses/LICENSE-2.0
 //   You may not use this file except in compliance with the License.
 
-import { Link, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { extname } from "path";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { Trans, useTranslation } from "react-i18next";
 import { makeStyles } from "tss-react/mui";
 
 import Logger from "@foxglove/log";
 import { AppSetting } from "@foxglove/studio-base/AppSetting";
-import AccountSettings from "@foxglove/studio-base/components/AccountSettingsSidebar/AccountSettings";
 import { AppBar } from "@foxglove/studio-base/components/AppBar";
 import { CustomWindowControlsProps } from "@foxglove/studio-base/components/AppBar/CustomWindowControls";
 import {
   DataSourceDialog,
   DataSourceDialogItem,
 } from "@foxglove/studio-base/components/DataSourceDialog";
-import { DataSourceSidebar } from "@foxglove/studio-base/components/DataSourceSidebar";
-import { EventsList } from "@foxglove/studio-base/components/DataSourceSidebar/EventsList";
-import { TopicList } from "@foxglove/studio-base/components/DataSourceSidebar/TopicList";
 import DocumentDropListener from "@foxglove/studio-base/components/DocumentDropListener";
-import ExtensionsSettings from "@foxglove/studio-base/components/ExtensionsSettings";
+import { EventsList } from "@foxglove/studio-base/components/EventsList";
 import KeyListener from "@foxglove/studio-base/components/KeyListener";
 import {
   MessagePipelineContext,
   useMessagePipeline,
   useMessagePipelineGetter,
 } from "@foxglove/studio-base/components/MessagePipeline";
-import MultiProvider from "@foxglove/studio-base/components/MultiProvider";
-import { PanelCatalog } from "@foxglove/studio-base/components/PanelCatalog";
 import PanelLayout from "@foxglove/studio-base/components/PanelLayout";
 import PanelSettings from "@foxglove/studio-base/components/PanelSettings";
 import PlaybackControls from "@foxglove/studio-base/components/PlaybackControls";
 import { ProblemsList } from "@foxglove/studio-base/components/ProblemsList";
 import RemountOnValueChange from "@foxglove/studio-base/components/RemountOnValueChange";
-import { SidebarContent } from "@foxglove/studio-base/components/SidebarContent";
-import Sidebars, { SidebarItem } from "@foxglove/studio-base/components/Sidebars";
-import { NewSidebarItem } from "@foxglove/studio-base/components/Sidebars/NewSidebar";
-import { SignInFormModal } from "@foxglove/studio-base/components/SignInFormModal";
+import { Sidebars, SidebarItem } from "@foxglove/studio-base/components/Sidebars";
 import Stack from "@foxglove/studio-base/components/Stack";
-import {
-  StudioLogsSettings,
-  StudioLogsSettingsSidebar,
-} from "@foxglove/studio-base/components/StudioLogsSettings";
+import { StudioLogsSettings } from "@foxglove/studio-base/components/StudioLogsSettings";
 import { SyncAdapters } from "@foxglove/studio-base/components/SyncAdapters";
+import { TopicList } from "@foxglove/studio-base/components/TopicList";
 import VariablesList from "@foxglove/studio-base/components/VariablesList";
 import { WorkspaceDialogs } from "@foxglove/studio-base/components/WorkspaceDialogs";
 import { useAppContext } from "@foxglove/studio-base/context/AppContext";
-import {
-  LayoutState,
-  useCurrentLayoutSelector,
-} from "@foxglove/studio-base/context/CurrentLayoutContext";
 import { useCurrentUser } from "@foxglove/studio-base/context/CurrentUserContext";
 import { EventsStore, useEvents } from "@foxglove/studio-base/context/EventsContext";
 import { useExtensionCatalog } from "@foxglove/studio-base/context/ExtensionCatalogContext";
@@ -69,22 +52,17 @@ import { usePlayerSelection } from "@foxglove/studio-base/context/PlayerSelectio
 import {
   LeftSidebarItemKey,
   RightSidebarItemKey,
-  SidebarItemKey,
-  SidebarItemKeys,
   WorkspaceContextStore,
   useWorkspaceStore,
 } from "@foxglove/studio-base/context/Workspace/WorkspaceContext";
 import { useAppConfigurationValue } from "@foxglove/studio-base/hooks";
-import useAddPanel from "@foxglove/studio-base/hooks/useAddPanel";
 import { useDefaultWebLaunchPreference } from "@foxglove/studio-base/hooks/useDefaultWebLaunchPreference";
 import useElectronFilesToOpen from "@foxglove/studio-base/hooks/useElectronFilesToOpen";
-import { useInitialDeepLinkState } from "@foxglove/studio-base/hooks/useInitialDeepLinkState";
 import useNativeAppMenuEvent from "@foxglove/studio-base/hooks/useNativeAppMenuEvent";
 import { PlayerPresence } from "@foxglove/studio-base/players/types";
 import { PanelStateContextProvider } from "@foxglove/studio-base/providers/PanelStateContextProvider";
 import WorkspaceContextProvider from "@foxglove/studio-base/providers/WorkspaceContextProvider";
-import ICONS from "@foxglove/studio-base/theme/icons";
-import isDesktopApp from "@foxglove/studio-base/util/isDesktopApp";
+import { parseAppURLState } from "@foxglove/studio-base/util/appURLState";
 
 import { useWorkspaceActions } from "./context/Workspace/useWorkspaceActions";
 
@@ -103,23 +81,10 @@ const useStyles = makeStyles()({
   },
 });
 
-const selectedLayoutIdSelector = (state: LayoutState) => state.selectedLayout?.id;
-
 function activeElementIsInput() {
   return (
     document.activeElement instanceof HTMLInputElement ||
     document.activeElement instanceof HTMLTextAreaElement
-  );
-}
-
-type InjectedSidebarItem = [SidebarItemKey, SidebarItem];
-function isInjectedSidebarItem(
-  item: [string, { iconName?: string; title: string }],
-): item is InjectedSidebarItem {
-  return (
-    SidebarItemKeys.some((itemKey) => itemKey === item[0]) &&
-    item[1].iconName != undefined &&
-    Object.keys(ICONS).includes(item[1].iconName)
   );
 }
 
@@ -131,46 +96,11 @@ function keyboardEventHasModifier(event: KeyboardEvent) {
   }
 }
 
-function AddPanel() {
-  const addPanel = useAddPanel();
-  const { openLayoutBrowser } = useWorkspaceActions();
-  const selectedLayoutId = useCurrentLayoutSelector(selectedLayoutIdSelector);
-  const { t } = useTranslation("addPanel");
-
-  return (
-    <SidebarContent disablePadding={selectedLayoutId != undefined} title={t("addPanel")}>
-      {selectedLayoutId == undefined ? (
-        <Typography color="text.secondary">
-          <Trans
-            t={t}
-            i18nKey="noLayoutSelected"
-            components={{
-              selectLayoutLink: <Link onClick={openLayoutBrowser} />,
-            }}
-          />
-        </Typography>
-      ) : (
-        <PanelCatalog mode="list" onPanelSelect={addPanel} />
-      )}
-    </SidebarContent>
-  );
-}
-
-function ExtensionsSidebar() {
-  return (
-    <SidebarContent title="Extensions" disablePadding>
-      <ExtensionsSettings />
-    </SidebarContent>
-  );
-}
-
 type WorkspaceProps = CustomWindowControlsProps & {
-  deepLinks?: string[]; // eslint-disable-line react/no-unused-prop-types
+  deepLinks?: string[];
   appBarLeftInset?: number;
   onAppBarDoubleClick?: () => void;
 };
-
-const DEFAULT_DEEPLINKS = Object.freeze([]);
 
 const selectPlayerPresence = ({ playerState }: MessagePipelineContext) => playerState.presence;
 const selectPlayerIsPresent = ({ playerState }: MessagePipelineContext) =>
@@ -184,6 +114,7 @@ const selectSeek = (ctx: MessagePipelineContext) => ctx.seekPlayback;
 const selectPlayUntil = (ctx: MessagePipelineContext) => ctx.playUntil;
 const selectPlayerId = (ctx: MessagePipelineContext) => ctx.playerState.playerId;
 const selectEventsSupported = (store: EventsStore) => store.eventsSupported;
+const selectSelectEvent = (store: EventsStore) => store.selectEvent;
 
 const selectWorkspaceDataSourceDialog = (store: WorkspaceContextStore) => store.dialogs.dataSource;
 const selectWorkspaceSidebarItem = (store: WorkspaceContextStore) => store.sidebars.legacy.item;
@@ -194,9 +125,7 @@ const selectWorkspaceRightSidebarItem = (store: WorkspaceContextStore) => store.
 const selectWorkspaceRightSidebarOpen = (store: WorkspaceContextStore) => store.sidebars.right.open;
 const selectWorkspaceRightSidebarSize = (store: WorkspaceContextStore) => store.sidebars.right.size;
 
-type WorkspaceContentProps = WorkspaceProps & { showSignInForm: boolean };
-
-function WorkspaceContent(props: WorkspaceContentProps): JSX.Element {
+function WorkspaceContent(props: WorkspaceProps): JSX.Element {
   const { classes } = useStyles();
   const containerRef = useRef<HTMLDivElement>(ReactNull);
   const { availableSources, selectSource } = usePlayerSelection();
@@ -229,24 +158,15 @@ function WorkspaceContent(props: WorkspaceContentProps): JSX.Element {
   // see comment below above the RemountOnValueChange component
   const playerId = useMessagePipeline(selectPlayerId);
 
-  const { currentUser, signIn } = useCurrentUser();
-  const supportsAccountSettings = signIn != undefined;
+  const { currentUser } = useCurrentUser();
 
   useDefaultWebLaunchPreference();
 
   const [enableStudioLogsSidebar = false] = useAppConfigurationValue<boolean>(
     AppSetting.SHOW_DEBUG_PANELS,
   );
-  // Since we can't toggle the title bar on an electron window, keep the setting at its initial
-  // value until the app is reloaded/relaunched.
-  const [currentEnableNewTopNav = true] = useAppConfigurationValue<boolean>(
-    AppSetting.ENABLE_NEW_TOPNAV,
-  );
 
-  const [initialEnableNewTopNav] = useState(currentEnableNewTopNav);
-  const enableNewTopNav = isDesktopApp() ? initialEnableNewTopNav : currentEnableNewTopNav;
-
-  const { sidebarItems: appContextSidebarItems, workspaceExtensions } = useAppContext();
+  const { workspaceExtensions } = useAppContext();
 
   // When a player is activated, hide the open dialog.
   useLayoutEffect(() => {
@@ -429,119 +349,12 @@ function WorkspaceContent(props: WorkspaceContentProps): JSX.Element {
     [openFiles, openHandle],
   );
 
-  // Since the _component_ field of a sidebar item entry is a component and accepts no additional
-  // props we need to wrap our DataSourceSidebar component to connect the open data source action to
-  // open the data source dialog.
-  const DataSourceSidebarItem = useMemo(() => {
-    return function DataSourceSidebarItemImpl() {
-      return <DataSourceSidebar disableToolbar={enableNewTopNav} />;
-    };
-  }, [enableNewTopNav]);
-
-  const PanelSettingsSidebar = useMemo(() => {
-    return function PanelSettingsSidebarImpl() {
-      return <PanelSettings disableToolbar />;
-    };
-  }, []);
-
-  const { layoutBrowser: AppContextLayoutBrowser } = useAppContext();
-
-  const [sidebarItems, sidebarBottomItems] = useMemo(() => {
-    const topItems = new Map<SidebarItemKey, SidebarItem>([
-      [
-        "connection",
-        {
-          iconName: "DatabaseSettings",
-          title: "Data source",
-          component: DataSourceSidebarItem,
-          badge:
-            playerProblems && playerProblems.length > 0
-              ? { count: playerProblems.length }
-              : undefined,
-        },
-      ],
-    ]);
-
-    if (!enableNewTopNav) {
-      if (AppContextLayoutBrowser) {
-        topItems.set("layouts", {
-          iconName: "FiveTileGrid",
-          title: "Layouts",
-          component: AppContextLayoutBrowser,
-        });
-      }
-      topItems.set("add-panel", {
-        iconName: "RectangularClipping",
-        title: "Add panel",
-        component: AddPanel,
-      });
-    }
-    topItems.set("panel-settings", {
-      iconName: "PanelSettings",
-      title: "Panel settings",
-      component: PanelSettings,
-    });
-    if (!enableNewTopNav) {
-      topItems.set("variables", {
-        iconName: "Variable2",
-        title: "Variables",
-        component: VariablesList,
-      });
-      topItems.set("extensions", {
-        iconName: "AddIn",
-        title: "Extensions",
-        component: ExtensionsSidebar,
-      });
-    }
-    if (enableStudioLogsSidebar) {
-      topItems.set("studio-logs-settings", {
-        iconName: "BacklogList",
-        title: "Studio logs settings",
-        component: StudioLogsSettingsSidebar,
-      });
-    }
-
-    const bottomItems = new Map<SidebarItemKey, SidebarItem>([]);
-
-    if (!enableNewTopNav) {
-      if (supportsAccountSettings) {
-        bottomItems.set("account", {
-          iconName: currentUser != undefined ? "BlockheadFilled" : "Blockhead",
-          title: currentUser != undefined ? `Signed in as ${currentUser.email}` : "Account",
-          component: AccountSettings,
-        });
-      }
-
-      for (const item of appContextSidebarItems ?? []) {
-        if (isInjectedSidebarItem(item)) {
-          bottomItems.set(item[0], item[1]);
-        }
-      }
-
-      bottomItems.set("app-settings", {
-        iconName: "Settings",
-        title: "Settings",
-      });
-    }
-
-    return [topItems, bottomItems];
-  }, [
-    DataSourceSidebarItem,
-    playerProblems,
-    enableNewTopNav,
-    enableStudioLogsSidebar,
-    AppContextLayoutBrowser,
-    supportsAccountSettings,
-    currentUser,
-    appContextSidebarItems,
-  ]);
-
   const eventsSupported = useEvents(selectEventsSupported);
   const showEventsTab = currentUser != undefined && eventsSupported;
 
   const leftSidebarItems = useMemo(() => {
-    const items = new Map<LeftSidebarItemKey, NewSidebarItem>([
-      ["panel-settings", { title: "Panel", component: PanelSettingsSidebar }],
+    const items = new Map<LeftSidebarItemKey, SidebarItem>([
+      ["panel-settings", { title: "Panel", component: PanelSettings }],
       ["topics", { title: "Topics", component: TopicList }],
       [
         "problems",
@@ -559,10 +372,10 @@ function WorkspaceContent(props: WorkspaceContentProps): JSX.Element {
       ],
     ]);
     return items;
-  }, [PanelSettingsSidebar, playerProblems]);
+  }, [playerProblems]);
 
   const rightSidebarItems = useMemo(() => {
-    const items = new Map<RightSidebarItemKey, NewSidebarItem>([
+    const items = new Map<RightSidebarItemKey, SidebarItem>([
       ["variables", { title: "Variables", component: VariablesList }],
     ]);
     if (enableStudioLogsSidebar) {
@@ -600,37 +413,71 @@ function WorkspaceContent(props: WorkspaceContentProps): JSX.Element {
     [getMessagePipeline],
   );
 
+  const targetUrlState = useMemo(() => {
+    const deepLinks = props.deepLinks ?? [];
+    return deepLinks[0] ? parseAppURLState(new URL(deepLinks[0])) : undefined;
+  }, [props.deepLinks]);
+
+  const [unappliedSourceArgs, setUnappliedSourceArgs] = useState(
+    targetUrlState ? { ds: targetUrlState.ds, dsParams: targetUrlState.dsParams } : undefined,
+  );
+
+  const selectEvent = useEvents(selectSelectEvent);
+  // Load data source from URL.
+  useEffect(() => {
+    if (!unappliedSourceArgs) {
+      return;
+    }
+
+    // Apply any available datasource args
+    if (unappliedSourceArgs.ds) {
+      log.debug("Initialising source from url", unappliedSourceArgs);
+      selectSource(unappliedSourceArgs.ds, {
+        type: "connection",
+        params: unappliedSourceArgs.dsParams,
+      });
+      selectEvent(unappliedSourceArgs.dsParams?.eventId);
+      setUnappliedSourceArgs({ ds: undefined, dsParams: undefined });
+    }
+  }, [selectEvent, selectSource, unappliedSourceArgs, setUnappliedSourceArgs]);
+
+  const [unappliedTime, setUnappliedTime] = useState(
+    targetUrlState ? { time: targetUrlState.time } : undefined,
+  );
+  // Seek to time in URL.
+  useEffect(() => {
+    if (unappliedTime?.time == undefined || !seek) {
+      return;
+    }
+
+    // Wait until player is ready before we try to seek.
+    if (playerPresence !== PlayerPresence.PRESENT) {
+      return;
+    }
+
+    log.debug(`Seeking to url time:`, unappliedTime.time);
+    seek(unappliedTime.time);
+    setUnappliedTime({ time: undefined });
+  }, [playerPresence, seek, unappliedTime]);
+
   return (
-    <MultiProvider
-      providers={[
-        /* eslint-disable react/jsx-key */
-        <PanelStateContextProvider />,
-        /* eslint-enable react/jsx-key */
-      ]}
-    >
-      {props.showSignInForm && <SignInFormModal />}
+    <PanelStateContextProvider>
       {dataSourceDialog.open && <DataSourceDialog />}
       <DocumentDropListener onDrop={dropHandler} allowedExtensions={allowedDropExtensions} />
       <SyncAdapters />
       <KeyListener global keyDownHandlers={keyDownHandlers} />
       <div className={classes.container} ref={containerRef} tabIndex={0}>
-        {enableNewTopNav && (
-          <AppBar
-            leftInset={props.appBarLeftInset}
-            onDoubleClick={props.onAppBarDoubleClick}
-            showCustomWindowControls={props.showCustomWindowControls}
-            isMaximized={props.isMaximized}
-            onMinimizeWindow={props.onMinimizeWindow}
-            onMaximizeWindow={props.onMaximizeWindow}
-            onUnmaximizeWindow={props.onUnmaximizeWindow}
-            onCloseWindow={props.onCloseWindow}
-          />
-        )}
+        <AppBar
+          leftInset={props.appBarLeftInset}
+          onDoubleClick={props.onAppBarDoubleClick}
+          showCustomWindowControls={props.showCustomWindowControls}
+          isMaximized={props.isMaximized}
+          onMinimizeWindow={props.onMinimizeWindow}
+          onMaximizeWindow={props.onMaximizeWindow}
+          onUnmaximizeWindow={props.onUnmaximizeWindow}
+          onCloseWindow={props.onCloseWindow}
+        />
         <Sidebars
-          items={sidebarItems}
-          bottomItems={sidebarBottomItems}
-          selectedKey={sidebarItem}
-          onSelectKey={sidebarActions.legacy.selectItem}
           leftItems={leftSidebarItems}
           selectedLeftKey={leftSidebarOpen ? leftSidebarItem : undefined}
           onSelectLeftKey={sidebarActions.left.selectItem}
@@ -662,9 +509,9 @@ function WorkspaceContent(props: WorkspaceContentProps): JSX.Element {
           </div>
         )}
       </div>
-      {!props.showSignInForm && workspaceExtensions}
+      {workspaceExtensions}
       <WorkspaceDialogs />
-    </MultiProvider>
+    </PanelStateContextProvider>
   );
 }
 
@@ -673,16 +520,10 @@ export default function Workspace(props: WorkspaceProps): JSX.Element {
     AppSetting.SHOW_OPEN_DIALOG_ON_STARTUP,
   );
 
-  const { currentUser } = useCurrentUser();
-
-  const { currentUserRequired } = useInitialDeepLinkState(props.deepLinks ?? DEFAULT_DEEPLINKS);
-
   const isPlayerPresent = useMessagePipeline(selectPlayerIsPresent);
 
-  const showSignInForm = currentUserRequired && currentUser == undefined;
-
   const initialItem: undefined | DataSourceDialogItem =
-    isPlayerPresent || !showOpenDialogOnStartup || showSignInForm ? undefined : "start";
+    isPlayerPresent || !showOpenDialogOnStartup ? undefined : "start";
 
   const initialState: Pick<WorkspaceContextStore, "dialogs"> = {
     dialogs: {
@@ -700,7 +541,7 @@ export default function Workspace(props: WorkspaceProps): JSX.Element {
 
   return (
     <WorkspaceContextProvider initialState={initialState}>
-      <WorkspaceContent showSignInForm={showSignInForm} {...props} />
+      <WorkspaceContent {...props} />
     </WorkspaceContextProvider>
   );
 }

@@ -15,6 +15,7 @@ import { MessageDefinition } from "@foxglove/message-definition";
 import { Time } from "@foxglove/rostime";
 import type { MessageEvent, ParameterValue } from "@foxglove/studio";
 import { Immutable } from "@foxglove/studio";
+import { Asset } from "@foxglove/studio-base/components/PanelExtensionAdapter";
 import { GlobalVariables } from "@foxglove/studio-base/hooks/useGlobalVariables";
 import { RosDatatypes } from "@foxglove/studio-base/types/RosDatatypes";
 import { Range } from "@foxglove/studio-base/util/ranges";
@@ -55,10 +56,12 @@ export interface Player {
   // If the player support service calls (i.e. PlayerState#capabilities contains PlayerCapabilities.callServices)
   // this will make a service call to the named service with the request payload.
   callService(service: string, request: unknown): Promise<unknown>;
+  // Asset fetching. Available if `capabilities` contains PlayerCapabilities.assets.
+  fetchAsset?(uri: string): Promise<Asset>;
   // Basic playback controls. Available if `capabilities` contains PlayerCapabilities.playbackControl.
   startPlayback?(): void;
   pausePlayback?(): void;
-  seekPlayback?(time: Time, backfillDuration?: Time): void;
+  seekPlayback?(time: Time): void;
   playUntil?(time: Time): void;
   // Seek to a particular time. Might trigger backfilling.
   // If the Player supports non-real-time speeds (i.e. PlayerState#capabilities contains
@@ -194,13 +197,6 @@ export type PlayerStateActiveData = {
   // A map of parameter names to parameter values, used to describe remote parameters such as
   // rosparams.
   parameters?: Map<string, ParameterValue>;
-
-  /** Set to true when `messages` has been recomputed without seek, backfill or playback.
-   * For example: when global variables changes, user-scripts needs to be rerun to recompute
-   * messages. This variable would be set to true to indicate that `messages` may have changed
-   * without a seek or backfill occurring.
-   */
-  messagesRecomputed?: boolean;
 };
 
 // Represents a ROS topic, though the actual data does not need to come from a ROS system.
@@ -304,6 +300,9 @@ export type PublishPayload = { topic: string; msg: Record<string, unknown> };
 export const PlayerCapabilities = {
   // Publishing messages. Need to be connected to some sort of live robotics system (e.g. ROS).
   advertise: "advertise",
+
+  // Fetching assets.
+  assets: "assets",
 
   // Calling services
   callServices: "callServices",
